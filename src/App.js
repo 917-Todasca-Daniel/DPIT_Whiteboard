@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const Homepage = () => {
+	return (
+		<div>
+			<h1>Homepage </h1>
+			<Link to='/repo'>Go to Notebook Repository</Link>
+		</div>
+	)
+};
 
-export default App;
+const NotebookRepository = () => {
+	return (
+		<div>
+			<h1>Repository</h1>
+			<Link to='/canvas'>Go to Canvas Editor</Link>
+		</div>
+	)
+};
+
+const CanvasEditor = () => {
+	return (
+		<div>
+				<h1>Canvas</h1>
+				<Link to='/'>Go to Homepage</Link>
+		</div>
+	)
+};
+
+export {Homepage, NotebookRepository, CanvasEditor };
