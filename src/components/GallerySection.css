@@ -1,0 +1,65 @@
+.gallery-small {
+  height: 100vh;
+  margin-left: 350px;
+  padding-left: 40px;
+  padding-top: 30px;
+  align-self: right;
+  margin-top: -17px;
+}
+
+.gallery-big {
+  height: 100vh;
+  padding-left: 40px;
+  padding-top: 30px;
+  margin-top: -17px;
+}
+
+.add-btn {
+  position: fixed;
+  font-size: 50px;
+  color: #13c79a;
+  cursor: pointer;
+  bottom: 65px;
+  right: 65px;
+  transition: transform 0.2s;
+}
+
+.add-btn:hover {
+  transform: scale(1.08);
+}
+
+.gallery-input {
+  align-items: center;
+  border: 2px #56c9ac solid;
+  align-self: right;
+  width: 12rem;
+  padding: 2px;
+  width: 12rem;
+  position: absolute;
+  right: 100px;
+  top: 127px;
+  border-radius: 40px;
+  outline: none;
+  height: 20px;
+}
+
+.gallery-input::placeholder {
+  font-size: 14px;
+  font-family: "Kanit", sans-serif;
+}
+
+.card-section--big {
+  height: 100vh;
+  margin-top: 70px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: auto auto 1fr 1fr 1fr auto auto;
+}
+
+.card-section--small {
+  height: 100vh;
+  margin-top: 70px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: auto auto 1fr 1fr 1fr auto auto;
+}
