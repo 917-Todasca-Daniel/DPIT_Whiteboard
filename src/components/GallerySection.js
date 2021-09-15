@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import './GallerySection.css'
 import { Card } from './Card';
 import { PlusCircle } from 'react-bootstrap-icons';
@@ -8,65 +7,49 @@ import { AddModal } from './AddModal';
 import moment from 'moment'; 
 import { useEffect, useFocus } from 'react';
 
-const url = 'https://mocki.io/v1/d3d6964d-7855-4b0c-a27b-8c051be2fb71';
+// Fake Json APIs for testing
+const notebook_url = 'https://mocki.io/v1/d3d6964d-7855-4b0c-a27b-8c051be2fb71';  
+const cover_url = 'https://mocki.io/v1/aa4a589d-523f-49f9-9774-7c6459e2cea4';
 
 export const GallerySection = (props) => {
     const sidebarValue = props.isSidebar;
-    const notebooks = useFetch(url);
+    const notebooks = useFetch(notebook_url);
+    const covers = useFetch(cover_url);
 
     const [inputState, setInputState] = useState('');
     const [visibleNotebooks, setVisibleNotebooks] = useState([]);
-    const [modalShow, setModalShow] = React.useState(false);
+    const [modalShow, setModalShow] = useState(false);
+    const [title, setTitle] = useState('Untitled');
 
-    const handleSearch = (event) => {
-        event.preventDefault();
-        setInputState(event.target.value)
-        if (inputState !== '')
+    useEffect(() => {
+        if (inputState === '') 
+            setVisibleNotebooks(notebooks);
+        else
+        // Search mode is on
         {
+            const keyword = inputState.toLowerCase();
+            setVisibleNotebooks(notebooks);
             setVisibleNotebooks((notebooks) => {
-                return notebooks.filter((notebook) => notebook.title.toLowerCase().search(inputState) !== -1)
+                return notebooks.filter((notebook) => notebook.title.toString().toLowerCase().search(keyword) !== -1)
             })
         }
-        else{
-            setVisibleNotebooks(notebooks);
-        }
-    }
-
-    useEffect(() => {
-        if (inputState !== '')
-        {
-            setVisibleNotebooks((visibleNotebooks) => {
-                return visibleNotebooks.filter((notebook) => notebook.title.search(inputState) !== -1)
-            })
-        }
-        else
-        {
-            setVisibleNotebooks(notebooks);
-        }
-      }, [inputState])
-
-    useEffect(() => {
-        if(inputState === '')
-            {
-                setVisibleNotebooks(notebooks);
-            }
-        else
-        {
-            handleSearch();
-        }
-    }, [notebooks])
+    })
 
     const addNewNotebook = () => {
         setModalShow(false);
+        const randomIndex = Math.floor(Math.random() * covers.length)
+        const myPhotoUrl = covers[randomIndex].photo_url;
         const newNb = {
             id : notebooks.length + 1,
-            title : 'Untitled',
+            title : title,
             date : moment().format("DD/MM/YYYY"),
             isFavorite : false,
-            image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp90VgIRjzVQuWy6imcYJOKdt0KvrI-F8RowkaapZuG2kkdGiGx9Gc6xjUH_mOzZznruQ&usqp=CAU'
+            image : `${myPhotoUrl}`
         }
         notebooks.push(newNb);
+        setTitle('Untitled');
     }
+
 
     return (
         <>
@@ -82,7 +65,7 @@ export const GallerySection = (props) => {
                {
                     visibleNotebooks.map((notebook) => {
                     return (
-                        <Card 
+                        <Card  
                         key = {notebook.id}
                         title = {notebook.title}
                         date = {notebook.date}
@@ -97,6 +80,7 @@ export const GallerySection = (props) => {
         </div>
         <AddModal
             show={modalShow}
+            titleState={[title, setTitle]}
             onHide={() => setModalShow(false)}
             addNotebook={() => addNewNotebook()}
             />

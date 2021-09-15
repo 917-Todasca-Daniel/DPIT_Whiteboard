@@ -6,6 +6,7 @@ import './AddModal.css'
 
 export const AddModal = (props) => {
   const inputElement = useRef(null);
+  const [title, setTitle] = props.titleState;
 
   useEffect(() => {
     if (inputElement.current) {
@@ -26,11 +27,11 @@ export const AddModal = (props) => {
         </Modal.Header>
         <Modal.Body className='w-100 text-center'>
           <h4 className='mdl-text'>ENTER THE NAME FOR YOUR NOTEBOOK</h4>
-          <input autoFocus className='mdl-input' type="text" ref={inputElement}/>
+          <input autoFocus className='mdl-input' type="text" ref={inputElement} onChange={event => setTitle(event.target.value)}/>
         </Modal.Body>
         <Modal.Footer>
-          <button onClick={props.onHide, props.addNotebook}>Open Notebook</button>
-          <button onClick={props.onHide}>Close</button>
+          <button className='button-28' onClick={props.onHide, props.addNotebook}>Open Notebook</button>
+          <button className='button-28' onClick={props.onHide}>Cancel</button>
         </Modal.Footer>
       </Modal>
     );
