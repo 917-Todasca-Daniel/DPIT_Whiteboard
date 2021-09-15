@@ -55,6 +55,9 @@ var canvasTypes = [{
   name: "temp",
   zIndex: 12
 }, {
+  name: "select",
+  zIndex: 13
+}, {
   name: "grid",
   zIndex: 10
 }];
@@ -92,6 +95,8 @@ var _default = (_temp = _class = function (_PureComponent) {
     _this.getPointData = function() {
       if (this.props.eraseCanvas)
         return { ...this.lazy.brush.toObject(), erase: true };
+      if (this.props.bSelect)
+        return { ...this.lazy.brush.toObject(), select: true };
       return this.lazy.brush.toObject();   
     }
 
@@ -253,6 +258,28 @@ var _default = (_temp = _class = function (_PureComponent) {
       _this.handlePointerMove(x, y);
     };
 
+    _this.handleSelectionEnd = function() {
+      const imageData = _this.ctx.select.getImageData(_this.sel_x, _this.sel_y, _this.sel_w, _this.sel_h);
+      _this.ctx.select.clearRect(_this.sel_x, _this.sel_y, _this.sel_w, _this.sel_h);
+      _this.ctx.drawing.putImageData(imageData, _this.sel_x, _this.sel_y);
+    }
+
+    _this.moveSelection = function(new_x, new_y) {
+      const imageData = _this.ctx.select.getImageData(_this.sel_x, _this.sel_y, _this.sel_w, _this.sel_h);
+      _this.ctx.select.clearRect(_this.sel_x, _this.sel_y, _this.sel_w, _this.sel_h);
+      _this.sel_x = new_x;
+      _this.sel_y = new_y;
+      _this.ctx.select.putImageData(imageData, _this.sel_x, _this.sel_y);
+    }
+
+    _this.AddSelection = function(new_x, new_y) {
+      const imageData = _this.ctx.select.getImageData(_this.sel_x, _this.sel_y, _this.sel_w, _this.sel_h);
+      _this.ctx.select.clearRect(_this.sel_x, _this.sel_y, _this.sel_w, _this.sel_h);
+      _this.sel_x += new_x;
+      _this.sel_y += new_y;
+      _this.ctx.select.putImageData(imageData, _this.sel_x, _this.sel_y);
+    }
+
     _this.handleDrawEnd = function (e) {
       e.preventDefault();
 
@@ -262,6 +289,28 @@ var _default = (_temp = _class = function (_PureComponent) {
       // Stop drawing & save the drawn line
       _this.isDrawing = false;
       _this.isPressing = false;
+      if (_this.props.bSelect) {
+        const xs = _this.getSelectionRectangle(_this.points);
+        if (xs.length == 4 && xs[0] > 0) {
+          _this.handleSelectionEnd();
+          var x = xs[0] | 0;
+          var y = xs[1] | 0;
+          var w = xs[2] | 0;
+          var h = xs[3] | 0;
+          if (w < 0) { x += w; w=-w; }
+          if (h < 0) { y += h; h=-h; }
+          if (w !== 0 && h !== 0) {
+            const imageData = _this.ctx.drawing.getImageData(x, y, w, h);
+            _this.ctx.drawing.clearRect(x, y, w, h);
+            _this.sel_x = x;
+            _this.sel_y = y;
+            _this.sel_w = w;
+            _this.sel_h = h;
+            _this.ctx.select.putImageData(imageData, x, y);
+          }
+        }
+      }
+      if (_this.props.bSelect === false && _this.props.disabled === false && _this.points.length >= 2) _this.props.onDrawFinish && _this.props.onDrawFinish(_this);
       _this.saveLine();
     };
 
@@ -287,6 +336,7 @@ var _default = (_temp = _class = function (_PureComponent) {
         _this.setCanvasSize(_this.canvas.interface, width, height);
         _this.setCanvasSize(_this.canvas.drawing, width, height);
         _this.setCanvasSize(_this.canvas.temp, width, height);
+        _this.setCanvasSize(_this.canvas.select, width, height);
         _this.setCanvasSize(_this.canvas.grid, width, height);
 
         _this.drawGrid(_this.ctx.grid);
@@ -303,7 +353,24 @@ var _default = (_temp = _class = function (_PureComponent) {
       canvas.style.height = height;
     };
 
+    _this.isMouseInside = function(e) {
+      if (e) {
+        var rect = _this.canvas.interface.getBoundingClientRect();
+
+        var clientX = e.clientX;
+        var clientY = e.clientY;
+
+        if (clientX < rect.left) return false;
+        if (clientX > rect.right) return false;
+        if (clientY > rect.bottom) return false;
+        if (clientY < rect.top) return false;
+        return true;
+      }
+      return false;
+    }
+
     _this.getPointerPos = function (e) {
+      _this.latestPosition = e;
       var rect = _this.canvas.interface.getBoundingClientRect();
 
       // use cursor pos as default
@@ -343,11 +410,13 @@ var _default = (_temp = _class = function (_PureComponent) {
         _this.redo_lines = [];
 
         // Draw current points
-        _this.drawPoints({
-          points: _this.points,
-          brushColor: _this.props.eraseCanvas ? "erase" : _this.props.brushColor,
-          brushRadius: _this.props.brushRadius
-        });
+        if (_this.props.bSelect);
+        else
+          _this.drawPoints({
+            points: _this.points,
+            brushColor: _this.props.eraseCanvas ? "erase" : _this.props.brushColor,
+            brushRadius: _this.props.brushRadius
+          });
       }
 
       _this.mouseHasMoved = true;
@@ -369,22 +438,24 @@ var _default = (_temp = _class = function (_PureComponent) {
       var p1 = points[0];
       var p2 = points[1];
 
-      _this.ctx.temp.moveTo(p2.x, p2.y);
-      _this.ctx.temp.beginPath();
+      {
+        _this.ctx.temp.moveTo(p2.x, p2.y);
+        _this.ctx.temp.beginPath();
 
-      for (var i = 1, len = points.length; i < len; i++) {
-        // we pick the point between pi+1 & pi+2 as the
-        // end point and p1 as our control point
-        var midPoint = midPointBtw(p1, p2);
-        _this.ctx.temp.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y);
-        p1 = points[i];
-        p2 = points[i + 1];
+        for (var i = 1, len = points.length; i < len; i++) {
+          // we pick the point between pi+1 & pi+2 as the
+          // end point and p1 as our control point
+          var midPoint = midPointBtw(p1, p2);
+          _this.ctx.temp.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y);
+          p1 = points[i];
+          p2 = points[i + 1];
+        }
+        // Draw last line as a straight line while
+        // we wait for the next point to be able to calculate
+        // the bezier control point
+        _this.ctx.temp.lineTo(p1.x, p1.y);
+        _this.ctx.temp.stroke();
       }
-      // Draw last line as a straight line while
-      // we wait for the next point to be able to calculate
-      // the bezier control point
-      _this.ctx.temp.lineTo(p1.x, p1.y);
-      _this.ctx.temp.stroke();
     };
 
     _this.saveLine = function () {
@@ -394,8 +465,14 @@ var _default = (_temp = _class = function (_PureComponent) {
 
       if (_this.points.length < 2) return;
 
-      if (this.points[0].erase) {
+      if (_this.points[0].erase) {
         brushColor = "erase";
+      }
+
+      if (_this.points[0].select) {
+        _this.points.length = 0;
+        _this.ctx.temp.clearRect(0, 0, width, height);
+        return;
       }
 
       // Save as new line
@@ -481,40 +558,68 @@ var _default = (_temp = _class = function (_PureComponent) {
       }
       ctx.stroke();
     };
+    
+    _this.getSelectionRectangle = function (points) {
+      var x = -100;
+      var y = -100;
+      var w = 10;
+      var h = 10;
+      if (_this.points.length > 0) {
+        x = _this.points[0].x;
+        y = _this.points[0].y;
+        w = _this.points[_this.points.length-1].x - x;
+        h = _this.points[_this.points.length-1].y - y;
+      }
+      return [x, y, w, h]; 
+    };
 
     _this.drawInterface = function (ctx, pointer, brush) {
       if (_this.props.hideInterface) return;
 
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-      // Draw brush preview
-      ctx.beginPath();
-      ctx.fillStyle = this.props.eraseCanvas ? "#FFFFFF" : _this.props.brushColor;
-      ctx.arc(brush.x, brush.y, _this.props.brushRadius, 0, Math.PI * 2, true);
-      ctx.fill();
-
-      // Draw mouse point (the one directly at the cursor)
-      ctx.beginPath();
-      ctx.fillStyle = _this.props.catenaryColor;
-      ctx.arc(pointer.x, pointer.y, 4, 0, Math.PI * 2, true);
-      ctx.fill();
-
-      // Draw catenary
-      if (_this.lazy.isEnabled()) {
+      if (_this.props.bSelect) {
+        var x = _this.getSelectionRectangle(_this.points);
         ctx.beginPath();
-        ctx.lineWidth = 2;
-        ctx.lineCap = "round";
-        ctx.setLineDash([2, 4]);
-        ctx.strokeStyle = _this.props.catenaryColor;
-        _this.catenary.drawToCanvas(_this.ctx.interface, brush, pointer, _this.chainLength);
+        ctx.globalAlpha = 0.4;
+        ctx.fillRect(x[0], x[1], x[2], x[3]);
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = "#17C69A";
+        ctx.lineWidth = 5;
         ctx.stroke();
       }
+      else {
+        // Draw brush preview
+        if (_this.isMouseInside(_this.latestPosition)) {
+            ctx.beginPath();
+            ctx.fillStyle = this.props.eraseCanvas ? "#FFFFFF" : _this.props.brushColor;
+            ctx.arc(brush.x, brush.y, _this.props.brushRadius, 0, Math.PI * 2, true);
+            ctx.fill();
+        }
 
-      // Draw brush point (the one in the middle of the brush preview)
-      ctx.beginPath();
-      ctx.fillStyle = _this.props.catenaryColor;
-      ctx.arc(brush.x, brush.y, 2, 0, Math.PI * 2, true);
-      ctx.fill();
+        // Draw mouse point (the one directly at the cursor)
+        ctx.beginPath();
+        ctx.fillStyle = _this.props.catenaryColor;
+        ctx.arc(pointer.x, pointer.y, 4, 0, Math.PI * 2, true);
+        ctx.fill();
+
+        // Draw catenary
+        if (_this.lazy.isEnabled()) {
+          ctx.beginPath();
+          ctx.lineWidth = 2;
+          ctx.lineCap = "round";
+          ctx.setLineDash([2, 4]);
+          ctx.strokeStyle = _this.props.catenaryColor;
+          _this.catenary.drawToCanvas(_this.ctx.interface, brush, pointer, _this.chainLength);
+          ctx.stroke();
+        }
+
+        // Draw brush point (the one in the middle of the brush preview)
+        ctx.beginPath();
+        ctx.fillStyle = _this.props.catenaryColor;
+        ctx.arc(brush.x, brush.y, 2, 0, Math.PI * 2, true);
+        ctx.fill();
+      }
     };
 
     _this.canvas = {};
@@ -525,11 +630,16 @@ var _default = (_temp = _class = function (_PureComponent) {
     _this.points = [];
     _this.lines = [];
     _this.redo_lines = [];
+    _this.latestPosition = null;
 
     _this.mouseHasMoved = true;
     _this.valuesChanged = true;
     _this.isDrawing = false;
     _this.isPressing = false;
+    _this.sel_x = -100;
+    _this.sel_y = -100;
+    _this.sel_w = 10;
+    _this.sel_h = 10;
     return _this;
   }
 
@@ -654,6 +764,8 @@ var _default = (_temp = _class = function (_PureComponent) {
   immediateLoading: _propTypes2.default.bool,
   hideInterface: _propTypes2.default.bool,
   eraseCanvas: _propTypes2.default.bool,
+  bSelect: _propTypes2.default.bool,
+  onDrawFinish: _propTypes2.default.func,
 }, _class.defaultProps = {
   onChange: null,
   scale: 1,
@@ -672,7 +784,9 @@ var _default = (_temp = _class = function (_PureComponent) {
   saveData: "",
   immediateLoading: false,
   hideInterface: false,
+  bSelect: false,
   eraseCanvas: false,
+  onDrawFinish: (ref) => { },
 }, _temp);
 
 exports.default = _default;
