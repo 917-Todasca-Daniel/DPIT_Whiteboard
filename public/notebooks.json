@@ -1,0 +1,42 @@
+[
+    {
+        "id":1,
+        "folder_id": 1,
+        "title":"OOP",
+        "date":"18/10/2021",
+        "isFavorite":false,
+        "image":"https://image.shutterstock.com/z/stock-vector-notebook-cover-with-floral-background-and-place-for-text-vector-notepad-cover-crumpled-paper-370759844.jpg"
+    },
+    {
+        "id":2,
+        "folder_id": 2,
+        "title":"Algebra Formulas",
+        "date":"11/12/2020",
+        "isFavorite":false,
+        "image":"https://i.pinimg.com/550x/fa/ea/03/faea03fed396199c91ce7421ad5622e8.jpg"
+    },
+    {
+        "id":3,
+        "folder_id": 3,
+        "title":"English Homework",
+        "date":"13/02/2021",
+        "isFavorite":false,
+        "image":"https://media.istockphoto.com/vectors/notebook-cover-vector-id656037464?s=612x612"
+    },
+    {
+        "id":4,
+        "folder_id": 3,
+        "title":"Spanish Lesson 3",
+        "date":"18/08/2021",
+        "isFavorite":false,
+        "image":"https://images-na.ssl-images-amazon.com/images/I/51-gf3bz3CL.jpg"
+    },
+    {
+        "id":5,
+        "folder_id": 2,
+        "title":"Physics 1",
+        "date":"22/11/2020",
+        "isFavorite":true,
+        "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnFV6E-gaY_HaRjn-CgGnI9N5z-Ov_pu8-0Mynr3USat0i7pv6zC5be3ZgKPnfj2oaeCs&usqp=CAU"
+    }
+]

@@ -1,0 +1,17 @@
+[
+    {
+        "id":1,
+        "name": "Computer Science",
+        "color": "#37b9e4"
+    },
+    {
+        "id":2,
+        "name": "Maths",
+        "color": "#e96b6b"
+    },
+    {
+        "id":3,
+        "name": "Languages",
+        "color": "#912eaa"
+    }
+]

@@ -16,12 +16,10 @@
 
 .add-btn {
   position: fixed;
-  font-size: 50px;
   color: #13c79a;
   cursor: pointer;
   bottom: 65px;
   right: 65px;
-  transition: transform 0.2s;
 }
 
 .add-btn:hover {

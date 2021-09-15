@@ -5,11 +5,19 @@ import { PlusCircle } from 'react-bootstrap-icons';
 import { useFetch } from '../useFetch';
 import { AddModal } from './AddModal';
 import moment from 'moment'; 
-import { useEffect, useFocus } from 'react';
+import { useEffect } from 'react';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+
 
 // Fake Json APIs for testing
-const notebook_url = 'https://mocki.io/v1/d3d6964d-7855-4b0c-a27b-8c051be2fb71';  
-const cover_url = 'https://mocki.io/v1/aa4a589d-523f-49f9-9774-7c6459e2cea4';
+const notebook_url = 'https://mocki.io/v1/e6c8084f-0424-4cd2-a989-8396d9e02d44';  
+const cover_url = 'https://mocki.io/v1/590c2c5a-a010-49cb-b0e3-2b1524921e8f';
+
+
+export const randomNumber = (min, max) => {
+    const r = Math.random()*(max-min) + min
+    return Math.floor(r)
+}
 
 export const GallerySection = (props) => {
     const sidebarValue = props.isSidebar;
@@ -37,7 +45,7 @@ export const GallerySection = (props) => {
 
     const addNewNotebook = () => {
         setModalShow(false);
-        const randomIndex = Math.floor(Math.random() * covers.length)
+        const randomIndex = randomNumber(0, covers.length - 1);
         const myPhotoUrl = covers[randomIndex].photo_url;
         const newNb = {
             id : notebooks.length + 1,
@@ -59,7 +67,7 @@ export const GallerySection = (props) => {
                     placeholder="   search for files.." 
                     name='Search' 
                     onChange={event => setInputState(event.target.value)}/>
-            <PlusCircle className="bi bi-plus-circle add-btn" onClick={() => setModalShow(true)}/>
+            <AddCircleIcon style={{'fontSize': '65px', 'transition': 'transform 0.2s'}} className='add-btn' onClick={() => setModalShow(true)}/>
             {
                 <div className={`${sidebarValue ? 'card-section--small' : 'card-section--big'}`}>
                {
