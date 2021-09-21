@@ -19,13 +19,4 @@ const NotebookRepository = () => {
 	)
 };
 
-const CanvasEditor = () => {
-	return (
-		<div>
-				<h1>Canvas</h1>
-				<Link to='/'>Go to Homepage</Link>
-		</div>
-	)
-};
-
-export {Homepage, NotebookRepository, CanvasEditor };
+export {Homepage, NotebookRepository };
