@@ -11,6 +11,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _propTypes = require("prop-types");
 
+var _clipboardCopy = require("copy-image-clipboard");
+
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _lazyBrush = require("lazy-brush");
@@ -58,6 +60,9 @@ var canvasTypes = [{
   name: "select",
   zIndex: 13
 }, {
+  name: "borders",
+  zIndex: 14
+}, {
   name: "grid",
   zIndex: 10
 }];
@@ -101,6 +106,7 @@ var _default = (_temp = _class = function (_PureComponent) {
     }
 
     _this.undo = function () {
+      console.log(JSON.stringify(_this.lines));
       if (_this.lines.length === 0) return;
       _this.redo_lines.push(_this.lines.pop());
       var lines = _this.lines;
@@ -116,6 +122,7 @@ var _default = (_temp = _class = function (_PureComponent) {
       _this.clear();
       _this.simulateDrawingLines({ lines: lines, immediate: true });
       _this.triggerOnChange();
+      console.log(JSON.stringify(_this.lines));
     };
 
     _this.getSaveData = function () {
@@ -197,7 +204,39 @@ var _default = (_temp = _class = function (_PureComponent) {
             brushRadius: brushRadius
           });
 
-          // Save line with the drawn points
+          if (brushColor === "move-select") {
+            const x = line.points[0];
+            const y = line.points[1];
+            const w = line.points[2];
+            const h = line.points[3];
+            const x2 = line.points[4];
+            const y2 = line.points[5];
+            const imageData = _this.ctx.drawing.getImageData(x, y, w, h);
+            
+            _this.ctx.select.putImageData(imageData, x2, y2);
+            _this.ctx.drawing.clearRect(x, y, w, h); 
+            _this.ctx.drawing.globalCompositeOperation = "source-over";
+            _this.ctx.drawing.drawImage(_this.canvas.select, 0, 0, _this.canvas.select.width, _this.canvas.select.height);
+            _this.ctx.select.clearRect(x2, y2, w, h);
+            _this.lines.push(line);
+            return;
+          }
+
+          if (brushColor === "paste-select") {
+            const w = line.points[2];
+            const h = line.points[3];
+            const x2 = line.points[4];
+            const y2 = line.points[5];
+            const imageData = _this.pasteMemo[line.imgData];
+            
+            _this.ctx.select.putImageData(imageData, x2, y2);
+            _this.ctx.drawing.globalCompositeOperation = "source-over";
+            _this.ctx.drawing.drawImage(_this.canvas.select, 0, 0, _this.canvas.select.width, _this.canvas.select.height);
+            _this.ctx.select.clearRect(x2, y2, w, h);
+            _this.lines.push(line);
+            return;
+          }
+            // Save line with the drawn points
           _this.points = points;
           _this.saveLine({ brushColor: brushColor, brushRadius: brushRadius });
           return;
@@ -258,10 +297,62 @@ var _default = (_temp = _class = function (_PureComponent) {
       _this.handlePointerMove(x, y);
     };
 
-    _this.handleSelectionEnd = function() {
+    _this.drawSelectBorder = function(time) {
+      _this.ctx.borders.beginPath();
+      _this.ctx.borders.setLineDash([25, 25]);
+      _this.ctx.borders.rect(_this.sel_x, _this.sel_y, _this.sel_w, _this.sel_h);
+      _this.ctx.borders.strokeStyle="#bf1717";
+      _this.ctx.borders.lineDashOffset = -(time) * 2;
+      _this.ctx.borders.lineWidth = 6;
+      _this.ctx.borders.stroke();
+    }
+
+    _this.saveSelectionToHistory = function() {
+      if (_this.org_x < -100 || _this.sel_x < -100 || (_this.sel_x === _this.orig_x && _this.sel_y === _this.orig_y));
+      else {
+        var obj = (_this.bPaste ? 
+          {
+            points: [_this.orig_x, _this.orig_y, _this.sel_w, _this.sel_h, _this.sel_x, _this.sel_y],
+            brushColor: "paste-select",
+            brushRadius: 2,
+            imgData: _this.pasteMemo.length - 1,
+          } : 
+          {
+            points: [_this.orig_x, _this.orig_y, _this.sel_w, _this.sel_h, _this.sel_x, _this.sel_y],
+            brushColor: "move-select",
+            brushRadius: 2,
+          }
+        );
+        _this.bPaste = false;
+        _this.drawPoints(obj);
+        _this.lines.push(obj);
+        _this.props.onDrawFinish && _this.props.onDrawFinish(_this);
+      }
+    }
+
+    _this.pasteSelection = function() {
+      _this.saveSelectionToHistory();
+
+      _this.bPaste = true;
+      _this.ctx.drawing.globalCompositeOperation = "source-over";
+      _this.ctx.drawing.drawImage(_this.canvas.select, 0, 0, _this.canvas.select.width, _this.canvas.select.height);
       const imageData = _this.ctx.select.getImageData(_this.sel_x, _this.sel_y, _this.sel_w, _this.sel_h);
       _this.ctx.select.clearRect(_this.sel_x, _this.sel_y, _this.sel_w, _this.sel_h);
-      _this.ctx.drawing.putImageData(imageData, _this.sel_x, _this.sel_y);
+      _this.sel_x += 100;
+      _this.sel_y += 100;
+      _this.ctx.select.putImageData(imageData, _this.sel_x, _this.sel_y);
+      _this.drawSelectBorder();
+    }
+
+    _this.handleSelectionEnd = function() {
+      _this.saveSelectionToHistory();
+
+      _this.props.onSelectFinish(_this);
+      _this.ctx.drawing.globalCompositeOperation = "source-over";
+      _this.ctx.drawing.drawImage(_this.canvas.select, 0, 0, _this.canvas.select.width, _this.canvas.select.height);
+      _this.ctx.select.clearRect(0, 0, 8000, 8000);
+      _this.sel_x = -100000;
+      _this.sel_y = -100000;
     }
 
     _this.moveSelection = function(new_x, new_y) {
@@ -290,6 +381,7 @@ var _default = (_temp = _class = function (_PureComponent) {
       _this.isDrawing = false;
       _this.isPressing = false;
       if (_this.props.bSelect) {
+        _this.ctx.select.globalCompositeOperation = "source-over";
         const xs = _this.getSelectionRectangle(_this.points);
         if (xs.length == 4 && xs[0] > 0) {
           _this.handleSelectionEnd();
@@ -301,9 +393,11 @@ var _default = (_temp = _class = function (_PureComponent) {
           if (h < 0) { y += h; h=-h; }
           if (w !== 0 && h !== 0) {
             const imageData = _this.ctx.drawing.getImageData(x, y, w, h);
+            _this.pasteImageData = imageData;
+            _this.pasteMemo.push(_this.pasteImageData);
             _this.ctx.drawing.clearRect(x, y, w, h);
-            _this.sel_x = x;
-            _this.sel_y = y;
+            _this.sel_x = _this.orig_x = x;
+            _this.sel_y = _this.orig_y = y;
             _this.sel_w = w;
             _this.sel_h = h;
             _this.ctx.select.putImageData(imageData, x, y);
@@ -337,6 +431,7 @@ var _default = (_temp = _class = function (_PureComponent) {
         _this.setCanvasSize(_this.canvas.drawing, width, height);
         _this.setCanvasSize(_this.canvas.temp, width, height);
         _this.setCanvasSize(_this.canvas.select, width, height);
+        _this.setCanvasSize(_this.canvas.borders, width, height);
         _this.setCanvasSize(_this.canvas.grid, width, height);
 
         _this.drawGrid(_this.ctx.grid);
@@ -353,7 +448,8 @@ var _default = (_temp = _class = function (_PureComponent) {
       canvas.style.height = height;
     };
 
-    _this.isMouseInside = function(e) {
+    _this.isMouseInside = function() {
+      const e = _this.latestPosition;
       if (e) {
         var rect = _this.canvas.interface.getBoundingClientRect();
 
@@ -426,6 +522,10 @@ var _default = (_temp = _class = function (_PureComponent) {
       var points = _ref3.points,
           brushColor = _ref3.brushColor,
           brushRadius = _ref3.brushRadius;
+
+      if (brushColor === "move-select" || brushColor === "paste-select") {
+        return;
+      }
 
       _this.ctx.temp.lineJoin = "round";
       _this.ctx.temp.lineCap = "round";
@@ -513,6 +613,9 @@ var _default = (_temp = _class = function (_PureComponent) {
           _ref5$once = _ref5.once,
           once = _ref5$once === undefined ? false : _ref5$once;
 
+      _this.ctx.borders.clearRect(0, 0, _this.canvas.borders.width, _this.canvas.borders.height);
+      _this.drawSelectBorder(_this.time);
+
       if (_this.mouseHasMoved || _this.valuesChanged) {
         var pointer = _this.lazy.getPointerCoordinates();
         var brush = _this.lazy.getBrushCoordinates();
@@ -523,6 +626,7 @@ var _default = (_temp = _class = function (_PureComponent) {
       }
 
       if (!once) {
+        setTimeout(() => {_this.time += 1}, 1);
         window.requestAnimationFrame(function () {
           _this.loop();
         });
@@ -590,7 +694,7 @@ var _default = (_temp = _class = function (_PureComponent) {
       }
       else {
         // Draw brush preview
-        if (_this.isMouseInside(_this.latestPosition)) {
+        if (_this.isMouseInside()) {
             ctx.beginPath();
             ctx.fillStyle = this.props.eraseCanvas ? "#FFFFFF" : _this.props.brushColor;
             ctx.arc(brush.x, brush.y, _this.props.brushRadius, 0, Math.PI * 2, true);
@@ -629,6 +733,11 @@ var _default = (_temp = _class = function (_PureComponent) {
 
     _this.points = [];
     _this.lines = [];
+    _this.pasteMemo = [];
+    _this.pasteImageData = null;
+    _this.bPaste = false;
+    _this.loop_clock = null;
+    _this.time = 0.0;
     _this.redo_lines = [];
     _this.latestPosition = null;
 
@@ -636,8 +745,10 @@ var _default = (_temp = _class = function (_PureComponent) {
     _this.valuesChanged = true;
     _this.isDrawing = false;
     _this.isPressing = false;
-    _this.sel_x = -100;
-    _this.sel_y = -100;
+    _this.orig_x = -1000;
+    _this.orig_y = -1000;
+    _this.sel_x = -1000;
+    _this.sel_y = -1000;
     _this.sel_w = 10;
     _this.sel_h = 10;
     return _this;
@@ -766,6 +877,7 @@ var _default = (_temp = _class = function (_PureComponent) {
   eraseCanvas: _propTypes2.default.bool,
   bSelect: _propTypes2.default.bool,
   onDrawFinish: _propTypes2.default.func,
+  onSelectFinish: _propTypes2.default.func,
 }, _class.defaultProps = {
   onChange: null,
   scale: 1,
@@ -787,6 +899,7 @@ var _default = (_temp = _class = function (_PureComponent) {
   bSelect: false,
   eraseCanvas: false,
   onDrawFinish: (ref) => { },
+  onSelectFinish: (ref) => { },
 }, _temp);
 
 exports.default = _default;

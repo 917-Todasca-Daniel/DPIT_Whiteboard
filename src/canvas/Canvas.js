@@ -97,7 +97,14 @@ const CanvasEditor = () => {
 	return (
 		<div onKeyUp={handleKeyPress}>
 			<div style={{display: "inline", position: "absolute", bottom: "2em", right: "3em", zIndex: 1}}>
-				<img src="https://i.ibb.co/wzsHBym/add-button.png" onClick={() => { IncremenentPageCount(); }} style={{width: "100%", cursor: "pointer"}}></img>
+				<img src="https://i.ibb.co/wzsHBym/add-button.png" onClick={() => { IncremenentPageCount(); 
+				if (drawingStyle === "selection") {
+					setDrawingStyle("panning"); 
+				 } }} 
+				style={{width: "100%", cursor: "pointer"}}></img>
+			</div>
+
+			<div className="dashed-border" style={{zIndex: 1}}>
 			</div>
 			
 			<div className="clickthrough_container" style={{display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#FBFBFB", padding: "5px", boxShadow: "inset 0px 27px 18px -30px rgba(163,163,163,0.62)"}}>

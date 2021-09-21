@@ -6,12 +6,14 @@ var redo = [];
 var canvasList = [];
 var pageCount = 1;
 var moveSpeed = 100;
+var activeCanvas = null;
 
 const Paste = () => {
-    console.log("paste");
+    if (activeCanvas) activeCanvas.pasteSelection();
 }
 
 const Undo = () => {
+    StopSelection();
     if (history.length === 0) return;
     const cmd = history.pop();
     redo.push(cmd);
@@ -21,6 +23,7 @@ const Undo = () => {
 }
 
 const Redo = () => {
+    StopSelection();
     if (redo.length === 0) return;
     const cmd = redo.pop();
     history.push(cmd);
@@ -38,15 +41,16 @@ const OnCanvasDraw = (ref) => {
 }
 
 const MoveSelection = (x, y) => {
-    canvasList.forEach((canvas) => {
-        canvas.AddSelection(x*moveSpeed, y*moveSpeed);
-    });
+    if (activeCanvas) activeCanvas.AddSelection(x*moveSpeed, y*moveSpeed);
 }
 
 const StopSelection = () => {
-    canvasList.forEach((canvas) => {
-        canvas.handleSelectionEnd();
-    });
+    if (activeCanvas) activeCanvas.handleSelectionEnd();
+}
+
+const updateActiveCanvas = (ref) => {
+    if (activeCanvas !== ref && activeCanvas) activeCanvas.handleSelectionEnd();
+    activeCanvas = ref;
 }
 
 var update = () => {};
@@ -68,6 +72,7 @@ const MultiPageCanvas = (brushThickness, brushColor, bEraseCanvas, bDisableCanva
 			canvasHeight={3508}
             ref         ={ref}
             onDrawFinish={OnCanvasDraw}
+            onSelectFinish={updateActiveCanvas}      
 			brushRadius	={brushThickness}
 			brushColor	={brushColor}
 			eraseCanvas	={bEraseCanvas}
