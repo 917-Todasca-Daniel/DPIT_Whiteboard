@@ -24,9 +24,9 @@ const Navbar = () => {
         }
     };
 
-    useEffect(() => {
-        showButton();
-    }, []);
+    // useEffect(() => {
+    //     showButton();
+    // }, []);
 
     window.addEventListener('resize', showButton);
 
@@ -39,34 +39,26 @@ const Navbar = () => {
         <React.Fragment>
             <nav className='navbar'>
             <div className="navbar-container">
-                   <List className="bi bi-list list-icon" onClick={showSidebar}/>
-                   <Link to="/" className="navbar-logo noSelect" onClick={closeMobileMenu}>
+                   <List className="bi bi-list list-icon" onClick={() => setIsSidebar(!isSidebar)}/>
+                   <Link to="/" className="navbar-logo noSelect">
                       Whiteboard    
                    </Link>    
-                   <div className='menu-icon' onClick={handleClick}>
-                       <i className={click ? 'fas fa-times' : 'fa fa-bars'}></i>
-                   </div>
-                   <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+                   <ul className='nav-menu'>
                        <li className='nav-item noSelect'>
-                           <Link to='/' className='nav-links' onClick={closeMobileMenu}>
+                           <Link to='/' className='nav-links'>
                                HOME
                            </Link>
                        </li>
                        <li className='nav-item noSelect'>
-                           <Link to='/account' className='nav-links' onClick={closeMobileMenu}>
-                               ACCOUNT
-                           </Link>
-                       </li>
-                       <li className='nav-item noSelect'>
-                           <Link to='/' className='nav-links' onClick={closeMobileMenu}>
+                           <Link to='/' className='nav-links'>
                                 LOG OUT
                            </Link>
                        </li>
                    </ul>
                 </div>     
             </nav>
-            <Sidebar isSidebar={isSidebar} />
-            <GallerySection isSidebar={isSidebar}/>
+            <Sidebar 
+                sidebarState={[isSidebar, setIsSidebar]} />
         </ React.Fragment>
     )}
 

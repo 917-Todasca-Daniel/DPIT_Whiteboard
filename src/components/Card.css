@@ -6,6 +6,19 @@
   transition: transform 0.2s;
 }
 
+.card-container.clicked {
+  height: 285px;
+  width: 220px;
+  margin: 20px 20px 20px 10px;
+  padding: 10px 10px 10px 10px;
+  background-color: white;
+  overflow: hidden;
+  border-radius: 10%;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  padding: 5px 5px 20px 15px;
+}
+
 .image-container {
   height: 150px;
   width: 160px;
@@ -14,13 +27,98 @@
   overflow: hidden;
 }
 
-.card-container:hover {
+.image-container.clicked {
+  height: 190px;
+  width: 190px;
+}
+
+.card-container.not-clicked:hover {
   transform: scale(1.1);
+}
+
+.option-bar {
+  margin-top: 7px;
+  margin-bottom: 3px;
+  margin-left: 4px;
+  margin-right: 3px;
+  width: 180px;
+  height: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.option {
+  height: 100%;
+  width: 55px;
+  border: 1.6px #dbdbdb solid;
+  justify-content: center;
+  display: flex;
+  border-radius: 15%;
+  transition: transform 0.2s;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  cursor: pointer;
+  /* transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1); */
+}
+
+.option.deleted {
+  width: 95px !important;
+  margin: 0px 0px 3px 3px !important;
+}
+
+.cardtext-area {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.isFavorite-heart {
+  fill: rgb(218, 58, 58) !important;
+}
+
+.isNotFavorite-heart {
+  fill: rgb(180, 180, 180) !important;
+}
+
+.option-icon {
+  font-size: 20px !important;
+  align-self: center;
+  margin: 3px 3px 3px 3px;
+}
+
+.option:hover {
+  color: #fff;
+  background-color: #c4c2c2;
+  transform: translateY(-2px);
+  border: 1.5px #cecdcd solid;
+}
+
+.option.isNotFavorite:hover {
+  background-color: #fff !important;
+}
+
+.option.isNotFavorite:hover .isNotFavorite-heart {
+  fill: rgb(218, 58, 58) !important;
+}
+
+.option.isFavorite:hover {
+  background-color: rgb(218, 58, 58) !important;
+}
+
+.option.isFavorite:hover .isFavorite-heart {
+  fill: #fff !important;
+}
+
+.option-icon:hover {
+  transform: scale(1) !important;
 }
 
 .card-text {
   font-family: "Kanit", sans-serif;
-  margin: 5px 5px 5px 0px;
+  margin: 5px 5px 0px 0px;
   text-align: center;
 }
 

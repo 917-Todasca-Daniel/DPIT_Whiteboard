@@ -1,6 +1,6 @@
 .modal-body {
-  height: 180px;
-  width: 380px;
+  height: 130px;
+  width: 200px;
 }
 
 .modal-content {
@@ -13,27 +13,8 @@
   background-position: center;
 }
 
-.w-100.text-center.all-folder {
-  height: 190px !important;
-}
-
-.input-folder-layout {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  vertical-align: middle;
-}
-
 .modal-backdrop {
   z-index: 1000 !important;
-}
-
-.mdl-header {
-  color: rgb(141, 141, 141);
-  font-size: 2.4rem;
-  font-weight: 700;
-  font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text",
-    "Times New Roman", serif;
 }
 
 .modal-footer {
@@ -41,55 +22,30 @@
 }
 
 .mdl-text {
+  text-align: center;
   color: #979c9b;
-  font-size: 2.1rem;
+  font-size: 1.7rem;
   font-weight: 850;
   font-family: "Kanit", sans-serif;
+  margin: 4px 20px 0px 20px;
 }
 
-.mdl-input {
-  border: 2px #56c9ac solid;
-  width: 15rem;
-  padding: 2px;
-  width: 17rem;
-  border-radius: 40px;
-  outline: none;
-  height: 35px;
-  margin-top: 30px;
-}
-
-.mdl-input::placeholder {
-  color: #d6d6d6;
-  font-family: "Kanit", sans-serif;
-}
-
-.divider.default.text {
-  font-family: "Kanit", sans-serif;
-}
-
-.mdl-input:hover {
-  box-shadow: #dde7e4 0 8px 15px;
-}
-
-.mdl-input:active {
-  box-shadow: #dde7e4 0 8px 15px;
-}
-
-.button-28 {
+.button-2 {
   appearance: none;
   background-color: transparent;
   border: 2px #56c9ac solid;
+  justify-content: center;
   border-radius: 10px;
   box-sizing: border-box;
   color: #979c9b;
   cursor: pointer;
   display: inline-block;
   font-family: "Kanit", sans-serif;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
   line-height: normal;
   margin: 6px;
-  min-height: 20px;
+  min-height: 18px;
   min-width: 0;
   outline: none;
   padding: 5px 10px;
@@ -99,22 +55,23 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  width: 140px;
+  height: 37px;
+  width: 100px;
   will-change: transform;
 }
 
-.button-28:disabled {
+.button-2:disabled {
   pointer-events: none;
 }
 
-.button-28:hover {
+.button-2:hover {
   color: #fff;
   background-color: #56c9ac;
   box-shadow: #d0dfdb 0 8px 15px;
   transform: translateY(-2px);
 }
 
-.button-28:active {
+.button-2:active {
   box-shadow: none;
   transform: translateY(0);
 }
