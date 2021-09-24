@@ -1,60 +1,79 @@
 .card-container {
-  height: 200px;
+  height: 240px;
   width: 160px;
   margin: 20px 20px 20px 10px;
   overflow: hidden;
   transition: transform 0.2s;
+  transform: scale(1);
 }
 
 .card-container.clicked {
-  height: 285px;
-  width: 220px;
-  margin: 20px 20px 20px 10px;
-  padding: 10px 10px 10px 10px;
-  background-color: white;
-  overflow: hidden;
-  border-radius: 10%;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-  padding: 5px 5px 20px 15px;
+  transform: scale(1.1);
 }
 
 .image-container {
-  height: 150px;
+  height: 160px;
   width: 160px;
   border: 1px solid rgb(236, 234, 234);
-  border-radius: 6%;
+  /* border-radius: 6%; */
+  border-radius: 17px;
   overflow: hidden;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2) !important;
 }
 
-.image-container.clicked {
+/* .image-container.clicked {
   height: 190px;
   width: 190px;
-}
+} */
 
 .card-container.not-clicked:hover {
   transform: scale(1.1);
 }
 
 .option-bar {
-  margin-top: 7px;
-  margin-bottom: 3px;
-  margin-left: 4px;
-  margin-right: 3px;
-  width: 180px;
+  margin-top: 4px;
+  margin-bottom: 7px;
+  /* margin-left: 4px;
+  margin-right: 3px; */
+  padding-left: 3px;
+  padding-right: 3px;
+  width: 160px;
   height: 25px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
+.option-bar-deleted {
+  margin-top: 4px;
+  margin-bottom: 7px;
+  /* margin-left: 4px;
+  margin-right: 3px; */
+  padding-left: 3px;
+  padding-right: 3px;
+  width: 160px;
+  height: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.option-bar.not-clicked {
+  visibility: hidden;
+}
+
+.option-bar-deleted.not-clicked {
+  visibility: hidden;
+}
+
 .option {
   height: 100%;
-  width: 55px;
-  border: 1.6px #dbdbdb solid;
+  width: 32px;
+  /* border: 1px #dbdbdb solid; */
+  /* border: 1.6px #56c9ac solid; */
   justify-content: center;
   display: flex;
-  border-radius: 15%;
+  border-radius: 40px;
   transition: transform 0.2s;
   -webkit-user-select: none;
   touch-action: manipulation;
@@ -63,11 +82,12 @@
 }
 
 .option.deleted {
-  width: 95px !important;
-  margin: 0px 0px 3px 3px !important;
+  width: 50px !important;
+  margin: 0px 5px 0px 5px !important;
 }
 
 .cardtext-area {
+  margin-top: 5px;
   width: 100%;
   height: 40px;
   display: flex;

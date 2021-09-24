@@ -1,11 +1,16 @@
 .css-12i7wg6-MuiPaper-root-MuiDrawer-paper {
-  background-image: url("https://cdn.wallpapersafari.com/86/23/hgGPki.jpg");
+  background-image: url("https://i.ibb.co/znH0FBh/Pattern2bun-Blurat.jpg");
   margin-top: 80px;
-  width: 350px;
-  position: fixed;
-  box-shadow: 20px 20px 50px rgb(238, 238, 238) !important;
+  width: 330px;
+  /* position: fixed; */
+  height: 100% !important;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2) !important;
   border-right: 0px !important;
   z-index: 900 !important;
+}
+
+.sidebar-container::-webkit-scrollbar {
+  display: none;
 }
 
 .css-x6wso {
@@ -20,6 +25,16 @@
 
 .sidebar-container {
   flex-flow: column wrap;
+  overflow-y: hidden;
+  max-height: calc(100vh - 80px) !important;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  /* overflow-y: hidden; */
+}
+
+.sidebar-container:hover {
+  overflow: overlay;
+  overflow: scroll;
 }
 
 .input-section {
@@ -33,7 +48,8 @@
 .sidebar-list {
   position: relative;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  margin-bottom: 3px !important;
   flex-wrap: wrap;
 }
 
@@ -43,7 +59,7 @@
   text-decoration: none;
   margin-top: 15px;
   padding-bottom: 10px;
-  padding-left: 45px;
+  padding-left: 40px;
   font-size: 18px;
   font-weight: 700;
   font-family: "Kanit", sans-serif;
@@ -59,8 +75,8 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  padding: 12px 50px 5px 30px;
-  margin-right: 90px;
+  padding: 12px 50px 5px 43px;
+  /* margin-right: 90px; */
   font-size: 15px;
   font-weight: 700;
   font-family: "Kanit", sans-serif;
@@ -106,11 +122,11 @@
 
 .inputStyle {
   /* align-items: center; */
-  border: 2px #56c9ac solid;
+  border: 1.6px #56c9ac solid;
   margin-top: 44px;
   margin-left: 40px;
-  padding: 2px;
-  width: 12rem;
+  padding: 12px;
+  width: 13rem;
   border-radius: 40px;
   /* align-self: center; */
   outline: none;
@@ -132,10 +148,10 @@
 }
 
 .add-file-button {
-  font-size: 32px;
+  font-size: 36px !important;
   font-weight: 600;
   color: #3eac90;
-  margin-top: 37px;
+  margin-top: 41px;
   margin-left: 16px;
   cursor: pointer;
 }
@@ -144,4 +160,13 @@
   font-size: 32px;
   color: rgb(48, 116, 101);
   cursor: pointer;
+}
+
+.sidebar-footer {
+  height: 100px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  border-top: 1.5px solid rgb(177, 177, 177);
+  background-color: white;
 }

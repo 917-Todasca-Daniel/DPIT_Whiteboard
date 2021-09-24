@@ -8,6 +8,8 @@ import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import RestorePageIcon from '@mui/icons-material/RestorePage';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Backdrop } from '@mui/material';
+import ShareIcon from '@mui/icons-material/Share';
+
 
 
 export const Card = (
@@ -31,11 +33,10 @@ export const Card = (
             <>
             <div className={`card-container ${idealState ? "clicked" : "not-clicked"}`} onClick={handleChange}> 
             {
-                idealState &&
                 (
                     page !== 'deleted' ?
                     <>
-                    <div className='option-bar'>
+                    <div className={`option-bar ${idealState ? "clicked" : "not-clicked"}`}>
                         <Link to='/canvas' style={{'textDecoration': 'none',  'color': 'inherit'}}>
                             <section className='option'>
                                 <ModeEditIcon className='option-icon' style={{'color' : 'black !important'}}/>
@@ -44,13 +45,16 @@ export const Card = (
                         <section className={`option ${favoriteState ? 'isFavorite' : 'isNotFavorite'}`} onClick={() => {setOption('fav'); setSelected(true)}}>
                             <FavoriteTwoToneIcon className={`option-icon ${favoriteState ? 'isFavorite-heart' : 'isNotFavorite-heart'}`}/>
                         </section>
+                        <section className='option' onClick={() => {setOption('share'); setSelected(true)}}>
+                            <ShareIcon className='option-icon'/>
+                        </section>
                         <section className='option' onClick={() => {setOption('delete'); setSelected(true)}}>
                             <DeleteIcon className='option-icon'/>
                         </section>
                     </div>   
                     </> 
                     :
-                    <div className='option-bar'>
+                    <div className={`option-bar-deleted ${idealState ? "clicked" : "not-clicked"}`}>
                         <section className='option deleted' onClick={() => {setOption('restore'); setSelected(true)}}>
                             <RestorePageIcon className='option-icon' />
                         </section>

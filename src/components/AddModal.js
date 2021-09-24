@@ -31,11 +31,11 @@ export const AddModal = (props) => {
     setChoice(myFolder.id);
   };
 
-  useEffect(() => {
-    if (inputElement.current) {
-      inputElement.current.focus();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (inputElement.current) {
+  //     inputElement.current.focus();
+  //   }
+  // }, []);
 
     return (
       <Modal className='mdl-body'

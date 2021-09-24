@@ -14,6 +14,7 @@ import { Collapse } from "react-collapse";
 import Switch from '@mui/material/Switch';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Drawer from '@mui/material/Drawer';
+import { Input } from 'semantic-ui-react';
 
 
 const folder_url ='https://mocki.io/v1/74c041f6-8104-4239-9ff2-208e32ec6f61';
@@ -48,7 +49,7 @@ export const Sidebar = (props) => {
     const [modalShow, setModalShow] = useState(false);
     const [name, setName] = useState('Untitled');
     const [notesFromFolder, setNotesFromFolder] = useState('all');
-    const [showFolders, setShowFolders] = useState(false);
+    const [showFolders, setShowFolders] = useState(true);
     const [checked, setChecked] = useState(true);
     const [folderChoice, setFolderChoice] = useState('');
 
@@ -58,7 +59,14 @@ export const Sidebar = (props) => {
       };
 
     const countNameOccurences = () => {
-        return folders.reduce((a, folder) => (name === folder.name || folder.name.startsWith(name) ? a + 1 : a), 0)
+        const re1 =  new RegExp(name);
+        const re2 = /\(([0-9])+\)/;
+        var flags = (re1.flags + 
+            re2.flags).split("")
+                .sort().join("") 
+        var regex = new RegExp(re1.source
+                    + re2.source, flags);
+        return folders.reduce((a, folder) => (name === folder.name || regex.test(folder.name) ? a + 1 : a), 0)
     }
 
     useEffect(() => {
@@ -110,6 +118,7 @@ export const Sidebar = (props) => {
                     />
                     <CreateNewFolderIcon className="add-file-button" style={{'fontSize': '34px', 'transition': 'transform 0.2s'}} onClick={() => setModalShow(true)}/>
                 </div>
+                <div className='sidebar-list'>
                 <div className='sidebar-bigItem noSelect' onClick={() => {setShowFolders(!showFolders)}}>
                     <FolderIcon className=" icon" style={{ 'fontSize' : '27px'}}/>
                     Folders
@@ -135,6 +144,7 @@ export const Sidebar = (props) => {
                 <div className='sidebar-bigItem noSelect' onClick={handleChange, () => setNotesFromFolder('deleted')}>
                     <DeleteIcon className="icon" style={{'color' : '#727272', 'fontSize' : '28px'}}/>
                     Trashcan
+                </div>
                 </div>
             </ React.Fragment>
         </div>

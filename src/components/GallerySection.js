@@ -11,10 +11,11 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { BsBoxArrowInLeft } from "react-icons/bs";
 import Button from '@mui/material/Button';
 import Grow from '@mui/material/Grow';
+import { Dropdown } from 'semantic-ui-react'
 
 
 // Fake Json APIs for testing
-const notebook_url = 'https://mocki.io/v1/be048f67-e970-484f-81e3-3040b5c17f53';  
+const notebook_url = 'https://mocki.io/v1/b2a6b962-ada2-4c6b-8bb9-1df04d4e6027';  
 const cover_url = 'https://mocki.io/v1/590c2c5a-a010-49cb-b0e3-2b1524921e8f';
 
 
@@ -23,6 +24,28 @@ export const randomNumber = (min, max) => {
     return Math.floor(r)
 }
 
+const sortOptions = [
+    {
+        key: '0',
+        text: 'no specific order',
+        value: 'no specific order',
+      },
+    {
+        key: '1',
+        text: 'sorted alphabetically',
+        value: 'sorted alphabetically',
+      },
+      {
+        key: '2',
+        text: 'sorted by date',
+        value: 'sorted by date',
+      },
+      {
+        key: '3',
+        text: 'recently used',
+        value: 'recently used',
+      }
+]
 
 export const GallerySection = (props) => {
     const sidebarValue = props.isSidebar;
@@ -47,7 +70,7 @@ export const GallerySection = (props) => {
     const [isSelected, setIsSelected] = useState(false);
 
 
-    useEffect(() => {
+    const setMyNotebooks = () => {
         const folderId = folderState;
         setVisibleNotebooks(notebooks);
         if (folderId === 'all')
@@ -76,6 +99,10 @@ export const GallerySection = (props) => {
                 return notebooks.filter((notebook) => notebook.folder_id.toString() === folderId && !notebook.isDeleted)
             })
         }
+    }
+
+    useEffect(() => {
+        setMyNotebooks();
         if (inputState !== '') 
         {
             const keyword = inputState.toLowerCase();
@@ -83,10 +110,17 @@ export const GallerySection = (props) => {
                 return notebooks.filter((notebook) => notebook.title.toString().toLowerCase().search(keyword) !== -1)
             })
         }
-    }, [visibleNotebooks])
+    }, [inputState, folderState, notebooks])
 
     const countNameOccurences = () => {
-        return notebooks.reduce((a, notebook) => (!notebook.isDeleted && title === notebook.title || notebook.title.startsWith(title) ? a + 1 : a), 0)
+        const re1 =  new RegExp(title);
+        const re2 = /\(([0-9])+\)/;
+        var flags = (re1.flags + 
+            re2.flags).split("")
+                .sort().join("") 
+        var regex = new RegExp(re1.source
+                    + re2.source, flags);
+        return notebooks.reduce((a, notebook) => (!notebook.isDeleted && title === notebook.title || regex.test(notebook.title) ? a + 1 : a), 0)
     }
 
 
@@ -97,7 +131,7 @@ export const GallerySection = (props) => {
         const titleOccur = countNameOccurences();
         const eventualTitle = title.concat('(', titleOccur, ')')
         const newNb = {
-            id : notebooks.length + 1,
+            id : new Date().getTime().toString(),
             title : `${titleOccur > 0 ? eventualTitle : title}`,
             date : moment().format("DD/MM/YYYY"),
             isFavorite : false,
@@ -107,6 +141,29 @@ export const GallerySection = (props) => {
         }
         notebooks.push(newNb);
         setTitle('Untitled');
+        setMyNotebooks();
+    }
+
+    const handleSortChange = (event, data) => {
+        if (event.target.textContent === 'no specific order');
+        {
+            notebooks.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
+            setMyNotebooks();
+        }   
+        if (event.target.textContent === 'sorted alphabetically')
+        {
+            notebooks.sort((a,b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0))
+            setMyNotebooks();
+        }
+        if (event.target.textContent === 'sorted by date')
+        {
+            notebooks.sort(function(a, b){
+                var aa = a.date.split('/').reverse().join(),
+                    bb = b.date.split('/').reverse().join();
+                return aa < bb ? -1 : (aa > bb ? 1 : 0);
+            });
+            setMyNotebooks();
+        }
     }
 
     useEffect(() => {
@@ -128,6 +185,7 @@ export const GallerySection = (props) => {
         const id = idState;
         const index = notebooks.findIndex((notebook => notebook.id === id));
         notebooks[index].isFavorite = !notebooks[index].isFavorite;
+        setMyNotebooks();
     }
 
     const deleteNotebook = () => {
@@ -135,12 +193,14 @@ export const GallerySection = (props) => {
         const index = notebooks.findIndex((notebook => notebook.id === id));
         notebooks[index].isDeleted = true;
         notebooks[index].isFavorite = false;
+        setMyNotebooks();
     }
 
     const restoreNotebook = () => {
         const id = idState;
         const index = notebooks.findIndex((notebook => notebook.id === id));
         notebooks[index].isDeleted = false;
+        setMyNotebooks();
     }
 
     const removeNotebook = () => {
@@ -148,17 +208,18 @@ export const GallerySection = (props) => {
         const index = notebooks.findIndex((notebook => notebook.id === id));
         notebooks.splice(index, 1);
         setDelModalShow(false);
+        setMyNotebooks();
     }
 
     useEffect(() => {
         if (folderState !== 'all') {
             if (folderState === 'favorites')  setFolderName('Favorites');
-        else
-        if (folderState === 'deleted') setFolderName('Trashcan');
-        else{
-            const fol = myFolders.find(folder => folder.id.toString() === folderState.toString())
-            setFolderName(fol.name)
-        }      
+            else
+            if (folderState === 'deleted') setFolderName('Trashcan');
+            else{
+                const fol = myFolders.find(folder => folder.id.toString() === folderState.toString())
+                setFolderName(fol.name)
+            }      
         }
     })
 
@@ -168,7 +229,7 @@ export const GallerySection = (props) => {
             <div className='gallery-header'>
                 <input className='gallery-input' 
                         type="text" 
-                        placeholder="   search for files.." 
+                        placeholder="   Search for files.." 
                         name='Search' 
                         onChange={event => setInputState(event.target.value)}/>
                 {
@@ -179,6 +240,18 @@ export const GallerySection = (props) => {
                         <p className='back-text'>View all notebooks</p>
                     </div>
                     <h3 className='folder-header'>{folderName}</h3>
+                </div>
+                }   
+                {
+                folderState === 'all' && 
+                <div className='sort'>
+                    Show {' '}
+                    <Dropdown
+                    inline
+                    options={sortOptions}
+                    defaultValue={sortOptions[0].value}
+                    onChange={handleSortChange}
+                    />
                 </div>
                 }
             </div>
@@ -208,6 +281,7 @@ export const GallerySection = (props) => {
                 </div>
                 {
                     folderState !== 'favorites' && folderState !== 'deleted' &&
+                    // <img src="https://i.ibb.co/tbk3M2c/Buton-modified.png" style={{'transition': 'transform 0.2s'}} alt="" className='add-btn' onClick={() => setModalShow(true)}/>
                     <AddCircleIcon style={{'fontSize': '65px', 'transition': 'transform 0.2s'}} className='add-btn' onClick={() => setModalShow(true)}/>
                 }
         </div>

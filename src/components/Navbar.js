@@ -24,26 +24,23 @@ const Navbar = () => {
         }
     };
 
-    // useEffect(() => {
-    //     showButton();
-    // }, []);
-
     window.addEventListener('resize', showButton);
 
     const [isSidebar, setIsSidebar] = useState(true);
-    const showSidebar = () => {
-        setIsSidebar(!isSidebar);
-    }
-    
+
     return (
         <React.Fragment>
             <nav className='navbar'>
             <div className="navbar-container">
                    <List className="bi bi-list list-icon" onClick={() => setIsSidebar(!isSidebar)}/>
                    <Link to="/" className="navbar-logo noSelect">
-                      Whiteboard    
+                      Writeboard    
                    </Link>    
                    <ul className='nav-menu'>
+                       <div className='account-section'>
+                            <div className='photo' style={{'backgroundImage' : 'url(https://i.ibb.co/qd9DnFW/images.jpg)'}}></div>
+                            <p className='username'>Username Here</p>
+                       </div>
                        <li className='nav-item noSelect'>
                            <Link to='/' className='nav-links'>
                                HOME
