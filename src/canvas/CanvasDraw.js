@@ -11,6 +11,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _propTypes = require("prop-types");
 
+var _stroke = require("perfect-freehand");
+
 var _clipboardCopy = require("copy-image-clipboard");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -106,7 +108,7 @@ var _default = (_temp = _class = function (_PureComponent) {
     }
 
     _this.undo = function () {
-      console.log(JSON.stringify(_this.lines));
+      // console.log(JSON.stringify(_this.lines));
       if (_this.lines.length === 0) return;
       _this.redo_lines.push(_this.lines.pop());
       var lines = _this.lines;
@@ -122,7 +124,7 @@ var _default = (_temp = _class = function (_PureComponent) {
       _this.clear();
       _this.simulateDrawingLines({ lines: lines, immediate: true });
       _this.triggerOnChange();
-      console.log(JSON.stringify(_this.lines));
+      // console.log(JSON.stringify(_this.lines));
     };
 
     _this.getSaveData = function () {
@@ -347,7 +349,7 @@ var _default = (_temp = _class = function (_PureComponent) {
     _this.handleSelectionEnd = function() {
       _this.saveSelectionToHistory();
 
-      _this.props.onSelectFinish(_this);
+      _this.props.onSelectFinish(_this, "text nou");
       _this.ctx.drawing.globalCompositeOperation = "source-over";
       _this.ctx.drawing.drawImage(_this.canvas.select, 0, 0, _this.canvas.select.width, _this.canvas.select.height);
       _this.ctx.select.clearRect(0, 0, 8000, 8000);
@@ -369,6 +371,52 @@ var _default = (_temp = _class = function (_PureComponent) {
       _this.sel_x += new_x;
       _this.sel_y += new_y;
       _this.ctx.select.putImageData(imageData, _this.sel_x, _this.sel_y);
+    }
+
+    _this.imageDataToJpg = function(imagedata) {
+      var canvas = document.createElement('canvas');
+      var ctx = canvas.getContext('2d');
+      canvas.width = imagedata.width;
+      canvas.height = imagedata.height;
+      ctx.putImageData(imagedata, 0, 0);
+  
+      // var image = new Image();
+      // image.src = canvas.toDataURL();
+      const base64_encoded_image = canvas.toDataURL().split(",")[1];
+
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer ya29.c.Kp8BEQifYs7rl8dmRyEfB2wcuXUVAchZ72QZ84xR5AEV-b8s6btiXgPEwzlygwZYhXmWSe-M3x0QYdlfXKc54E2HuSzeImkgLHGNFYr6GxSx55DpHY4tOWUkHKINFDUyYnfkkfvStTyHHdn7BAdlf_XnjKVNGwt9WQSGGwsGiHuXE7-xcgQYxFlpT47FrjZhLMACRNpd0FiLKANQMXka-EY9...............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................");
+      myHeaders.append("Content-Type", "application/json");
+      
+      var raw = JSON.stringify({
+        "requests": [
+          {
+            "image": {
+              "content": base64_encoded_image
+            },
+            "features": [
+              {
+                "type": "DOCUMENT_TEXT_DETECTION"
+              }
+            ]
+          }
+        ]
+      });
+      
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+
+      fetch("https://vision.googleapis.com/v1/images:annotate", requestOptions)
+        .then(response => response.text())
+        //.then(result => console.log(result))
+        .then(result => {console.log(result); const parsed_result = JSON.parse(result); _this.props.changeOCRText(parsed_result["responses"][0]["textAnnotations"][0]["description"]); })
+        .catch(error => console.log('error', error));
+
+     
     }
 
     _this.handleDrawEnd = function (e) {
@@ -393,6 +441,7 @@ var _default = (_temp = _class = function (_PureComponent) {
           if (h < 0) { y += h; h=-h; }
           if (w !== 0 && h !== 0) {
             const imageData = _this.ctx.drawing.getImageData(x, y, w, h);
+            _this.imageDataToJpg(imageData);
             _this.pasteImageData = imageData;
             _this.pasteMemo.push(_this.pasteImageData);
             _this.ctx.drawing.clearRect(x, y, w, h);
@@ -405,6 +454,34 @@ var _default = (_temp = _class = function (_PureComponent) {
         }
       }
       if (_this.props.bSelect === false && _this.props.disabled === false && _this.points.length >= 2) _this.props.onDrawFinish && _this.props.onDrawFinish(_this);
+      
+      if (_this.props.bSmooth === true) {
+        console.log("etc");
+        const new_format_points = _this.points.map(result => 
+          [result["x"], result["y"], 0.5]
+        );
+        console.log(JSON.stringify(new_format_points));
+        const stroked_points = _stroke.getStroke(new_format_points);
+
+        console.log(JSON.stringify(stroked_points));
+        // console.log(JSON.stringify(new_format_stroked_points);
+        
+        for (var i = 0; i < _this.points.length && i < stroked_points.length; i++)
+        {
+          _this.points[i].x = Math.floor(stroked_points[i][0]);
+          _this.points[i].y = Math.floor(stroked_points[i][1]);
+        }
+
+       
+        console.log(JSON.stringify(_this.points));
+        if (_this.points.length >= 2 )
+        _this.drawPoints({
+          points: _this.points,
+          brushColor: _this.props.brushColor,
+          brushRadius: _this.props.brushRadius
+        });
+      }
+
       _this.saveLine();
     };
 
@@ -878,6 +955,8 @@ var _default = (_temp = _class = function (_PureComponent) {
   bSelect: _propTypes2.default.bool,
   onDrawFinish: _propTypes2.default.func,
   onSelectFinish: _propTypes2.default.func,
+  changeOCRText: _propTypes2.default.func,
+  bSmooth: _propTypes2.default.bool,
 }, _class.defaultProps = {
   onChange: null,
   scale: 1,
@@ -900,6 +979,8 @@ var _default = (_temp = _class = function (_PureComponent) {
   eraseCanvas: false,
   onDrawFinish: (ref) => { },
   onSelectFinish: (ref) => { },
+  changeOCRText: (text) => { },
+  bSmooth: false,
 }, _temp);
 
 exports.default = _default;

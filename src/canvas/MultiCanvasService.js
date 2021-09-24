@@ -8,6 +8,8 @@ var pageCount = 1;
 var moveSpeed = 100;
 var activeCanvas = null;
 
+var textboxOCR = null;
+
 const Paste = () => {
     if (activeCanvas) activeCanvas.pasteSelection();
 }
@@ -48,14 +50,19 @@ const StopSelection = () => {
     if (activeCanvas) activeCanvas.handleSelectionEnd();
 }
 
-const updateActiveCanvas = (ref) => {
+const updateActiveCanvas = (ref, textOCR) => {
+    if (textboxOCR) {
+        textboxOCR.defaultValue = textOCR;
+    }
+    else console.log("aoleo");
     if (activeCanvas !== ref && activeCanvas) activeCanvas.handleSelectionEnd();
     activeCanvas = ref;
 }
 
 var update = () => {};
 
-const MultiPageCanvas = (brushThickness, brushColor, bEraseCanvas, bDisableCanvas, zoomScale, bSelect) => {
+const MultiPageCanvas = (brushThickness, brushColor, bEraseCanvas, bDisableCanvas, bSmooth, changeOCRText, zoomScale, OCRRef, bSelect) => {
+    textboxOCR = OCRRef.current;
     const [value, setValue] = useState(0); 
     canvasList = [];
     const ref = useRef(null);
@@ -73,6 +80,8 @@ const MultiPageCanvas = (brushThickness, brushColor, bEraseCanvas, bDisableCanva
             ref         ={ref}
             onDrawFinish={OnCanvasDraw}
             onSelectFinish={updateActiveCanvas}      
+            changeOCRText={changeOCRText}
+            bSmooth     ={bSmooth}
 			brushRadius	={brushThickness}
 			brushColor	={brushColor}
 			eraseCanvas	={bEraseCanvas}

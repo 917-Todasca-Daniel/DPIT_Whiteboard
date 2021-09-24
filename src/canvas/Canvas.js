@@ -10,10 +10,13 @@ import UndoIcon from '@material-ui/icons/Undo';
 import RedoIcon from '@material-ui/icons/Redo';
 import OpenWithIcon from '@material-ui/icons/OpenWith';
 import FormatColorTextIcon from '@material-ui/icons/FormatColorText';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import ShareIcon from '@material-ui/icons/Share';
 import HomeIcon from '@material-ui/icons/Home';
 import Box from '@material-ui/core/Box'
 import PhotoSizeSelectLargeIcon from '@material-ui/icons/PhotoSizeSelectLarge';
+import TextField from '@mui/material/TextField';
+import { styled } from '@mui/material/styles';
 
 import 'react-responsive-combo-box/dist/index.css'
 import './clickthrough.css'
@@ -33,20 +36,44 @@ DisableScroll();
 
 var drawingStyle = "freeform";
 var brushThicknessMap = new Map([
-	['eraser', 80], ['freeform', 3],
+	['eraser', 80], ['freeform', 3], ['smoothing', 3]
 ])
 var brushSizeOptions = [3, 6, 20, 80];
+
+const CssTextField = styled(TextField)({
+	'& label.Mui-focused': {
+	  color: '#17C69A',
+	},
+	'& .MuiInput-underline:after': {
+	  borderBottomColor: 'green',
+	},
+	'& .MuiOutlinedInput-root': {
+	  '& fieldset': {
+		borderColor: 'black',
+	  },
+	  '&:hover fieldset': {
+		borderColor: '#149172',
+	  },
+	  '&.Mui-focused fieldset': {
+		borderColor: '#17C69A',
+	  },
+	},
+  });
 
 const CanvasEditor = () => {
 	const [bEraseCanvas, 	setErase] 		= useState(false);
 	const [bDisableCanvas, 	disableCanvas] 	= useState(false);
 	const [bPanning, 		setPanning] 	= useState(true);
 	const [bSelect, 		setSelection] 	= useState(false);
+	const [bSmooth, 		setSmooth] 		= useState(false);
+	const [textOCRBox,      changeOCRText]  = useState("Hello");
 
 	const [brushColor, 		setBrushColor] 		= useState("#000000");
 	const [brushThickness, 	setBrushThickness] 	= useState(3);
-	const [zoomScale, 		setZoomScale] 		= useState(1);
+	const [zoomScale, 		setZoomScale] 		= useState(0.35);
 
+	const OCRRef 			= useRef(null);
+	const smoothIconRef 	= useRef(null);
 	const zoomPanPitchRef 	= useRef(null);
 	const selectionIconRef 	= useRef(null);
 	const brushComboBoxRef 	= useRef(null);
@@ -56,10 +83,11 @@ const CanvasEditor = () => {
 	const colorPickerRef 	= useRef(null);
 
 	const drawingStylesBehaviours = new Map([
-		['eraser', 		() => { setErase(true); 	setPanning(true); 	disableCanvas(false);	setSelection(false); 	}],
-		['freeform', 	() => { setErase(false); 	setPanning(true); 	disableCanvas(false);	setSelection(false); 	}],
-		['panning',		() => { setErase(false); 	setPanning(false); 	disableCanvas(true);	setSelection(false); 	}],
-		['selection',	() => { setErase(false); 	setPanning(true); 	disableCanvas(false);	setSelection(true); 	}],
+		['eraser', 		() => { setSmooth(false);	setErase(true); 	setPanning(true); 	disableCanvas(false);	setSelection(false); 	}],
+		['freeform', 	() => { setSmooth(false);	setErase(false); 	setPanning(true); 	disableCanvas(false);	setSelection(false); 	}],
+		['panning',		() => { setSmooth(false);	setErase(false); 	setPanning(false); 	disableCanvas(true);	setSelection(false); 	}],
+		['selection',	() => { setSmooth(false);	setErase(false); 	setPanning(true); 	disableCanvas(false);	setSelection(true); 	}],
+		['smoothing',	() => { setSmooth(true);	setErase(false); 	setPanning(true); 	disableCanvas(false);	setSelection(false); 	}],
 	]);
 
 	const iconRefMap = new Map([
@@ -67,14 +95,21 @@ const CanvasEditor = () => {
 		['freeform', 	freeformIconRef],
 		['panning',		panningIconRef],
 		['selection',	selectionIconRef],
+		['smoothing',	smoothIconRef],
 	]);
 
 	const setDrawingStyle = (newDrawingStyle) => {
+		OCRRef.current.style.display = "none";
+		if (newDrawingStyle === "selection") 
+			OCRRef.current.style.display = "inline-block";
 		StopSelection();
 		iconRefMap.get(drawingStyle).current.style.backgroundColor = "transparent";
 		brushThicknessMap.set(drawingStyle, brushThickness);
 		drawingStylesBehaviours.get(newDrawingStyle)();
 		drawingStyle = newDrawingStyle;
+		if (drawingStyle !== "smoothing" || drawingStyle !== 'drawing' || drawingStyle !== 'smoothing') {
+			brushComboBoxRef.current.innerHTML = "             ";
+		}
 		setBrushThickness(brushThicknessMap.get(drawingStyle));
 		iconRefMap.get(drawingStyle).current.style.backgroundColor = "#E8E8E8";
 		if (drawingStyle === "panning") return;
@@ -103,6 +138,19 @@ const CanvasEditor = () => {
 				 } }} 
 				style={{width: "100%", cursor: "pointer"}}></img>
 			</div>
+			
+			<div style={{display: "inline", position: "absolute", top: "5em", left: "5em", zIndex: 1}}>
+				<CssTextField label="Copy text:" id="custom-css-outlined-input"
+				ref={OCRRef}
+				style={{display: "none"}}
+				// InputProps={{
+            	// readOnly: true,
+          		// }}
+				value={textOCRBox}
+				multiline
+          		rows={5}
+				/>
+			</div>
 
 			<div className="dashed-border" style={{zIndex: 1}}>
 			</div>
@@ -114,6 +162,7 @@ const CanvasEditor = () => {
 				<Box mx={3}></Box>
 
 				<IconButton style={{color: "#373936", backgroundColor: "#E8E8E8"}} onClick={() => { setDrawingStyle('freeform'); }} ref={freeformIconRef}> <CreateIcon/> </IconButton>
+				<IconButton style={{color: "#373936"}} onClick={() => { setDrawingStyle('smoothing'); }} ref={smoothIconRef}> <AutoFixHighIcon/> </IconButton>
 				<IconButton style={{color: "#373936"}} onClick={() => { setDrawingStyle('eraser'); }} ref={eraserIconRef}> <ClearAllIcon/> </IconButton>
 				<IconButton style={{color: "#373936"}} onClick={() => { setDrawingStyle('panning'); }} ref={panningIconRef}> <OpenWithIcon/> </IconButton>
 				<IconButton style={{color: "#373936"}} onClick={() => { setDrawingStyle('selection'); }} ref={selectionIconRef}> <PhotoSizeSelectLargeIcon/> </IconButton>
@@ -124,10 +173,13 @@ const CanvasEditor = () => {
 					options={brushSizeOptions}
 					onSelect={(option) => { setBrushThickness(option); 
 						brushComboBoxRef.current.innerHTML = option;
+						if (drawingStyle !== "smoothing" || drawingStyle !== 'drawing' || drawingStyle !== 'smoothing') {
+							brushComboBoxRef.current.innerHTML = "             ";
+						}
 					}
 				}>
 				</ComboBox>
-				<p className="clickthrough" ref={brushComboBoxRef} style={{position: "absolute", marginLeft: "12.0em", padding: "0.4em", backgroundColor: "#FBFBFB", zOrder: 2}}> 3 </p>
+				<p className="clickthrough" ref={brushComboBoxRef} style={{position: "absolute", marginLeft: "14.7em", padding: "0.5em", backgroundColor: "#FBFBFB", zOrder: 2}}> 3 </p>
 
 				<IconButton style={{color: "#373936"}} onClick={() => { colorPickerRef.current.style.display = "inline"; }}> <FormatColorTextIcon/> </IconButton>
 
@@ -151,11 +203,14 @@ const CanvasEditor = () => {
 					panning: {...{disabled: bPanning}}, 
 					limitToBounds: false,
 					minScale: 0.1,
+					initialPositionX: (window.innerWidth - 2450*0.35)/2,
+					initialPositionY: 10,
 					initialScale: zoomScale,
 					onZoom: (ref, event) => { setZoomScale(ref.state.scale); } 
 				}}>
 					<TransformComponent>
-						{ MultiPageCanvas(brushThickness, brushColor, bEraseCanvas, bDisableCanvas, zoomScale, bSelect) }
+						{ MultiPageCanvas(brushThickness, brushColor, bEraseCanvas, bDisableCanvas, bSmooth,
+							changeOCRText, zoomScale, OCRRef, bSelect) }
 					</TransformComponent>
 				</TransformWrapper>
 			</div>
