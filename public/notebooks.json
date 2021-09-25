@@ -1,0 +1,65 @@
+[
+    {
+        "id":1,
+        "folder_id": 1,
+        "title":"OOP",
+        "date":"18/03/2021",
+        "isFavorite":false,
+        "image":"https://image.shutterstock.com/z/stock-vector-notebook-cover-with-floral-background-and-place-for-text-vector-notepad-cover-crumpled-paper-370759844.jpg",
+        "isDeleted": false
+    },
+    {
+        "id":2,
+        "folder_id": 2,
+        "title":"Algebra Formulas",
+        "date":"11/12/2020",
+        "isFavorite":false,
+        "image":"https://i.pinimg.com/550x/fa/ea/03/faea03fed396199c91ce7421ad5622e8.jpg",
+        "isDeleted": false
+    },
+    {
+        "id":3,
+        "folder_id": 3,
+        "title":"English Homework",
+        "date":"13/02/2021",
+        "isFavorite":false,
+        "image":"https://media.istockphoto.com/vectors/notebook-cover-vector-id656037464?s=612x612",
+        "isDeleted": false
+    },
+    {
+        "id":4,
+        "folder_id": 3,
+        "title":"Spanish Lesson 3",
+        "date":"18/08/2021",
+        "isFavorite":true,
+        "image":"https://images-na.ssl-images-amazon.com/images/I/51-gf3bz3CL.jpg",
+        "isDeleted": false
+    },
+    {
+        "id":5,
+        "folder_id": 2,
+        "title":"Physics 1",
+        "date":"22/11/2020",
+        "isFavorite":true,
+        "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnFV6E-gaY_HaRjn-CgGnI9N5z-Ov_pu8-0Mynr3USat0i7pv6zC5be3ZgKPnfj2oaeCs&usqp=CAU",
+        "isDeleted": false
+    },
+    {
+        "id":6,
+        "folder_id": 2,
+        "title":"Geometry Cheatsheet",
+        "date":"13/11/2019",
+        "isFavorite":true,
+        "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp90VgIRjzVQuWy6imcYJOKdt0KvrI-F8RowkaapZuG2kkdGiGx9Gc6xjUH_mOzZznruQ&usqp=CAU",
+        "isDeleted": false
+    },
+    {
+        "id":7,
+        "folder_id": 1,
+        "title":"Operating Systems Course3",
+        "date":"10/11/2020",
+        "isFavorite":false,
+        "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr0BOU0pTrdePlM9mpOq_Pb9_1ll8pGavrkA9G5981NXBTvN9hq0xw5g3DpwTuzla1YhM&usqp=CAU",
+        "isDeleted": false
+    }
+]

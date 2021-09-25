@@ -31,14 +31,3 @@ const Homepage = () => {
 		
 	)
 };
-
-const NotebookRepository = () => {
-	return (
-		<div>
-			<h1>Repository</h1>
-			<Link to='/canvas'>Go to Canvas Editor</Link>
-		</div>
-	)
-};
-
-export {Homepage, NotebookRepository };

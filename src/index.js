@@ -1,8 +1,10 @@
 import React from 'react';
+import './index.css';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Homepage, NotebookRepository } from './App';
+import { Homepage } from './App';
 import { CanvasEditor } from './canvas/Canvas';
+import { NotebookRepository } from './notebook_gallery/NotebookRepository'
 
 ReactDOM.render(
     <Router>

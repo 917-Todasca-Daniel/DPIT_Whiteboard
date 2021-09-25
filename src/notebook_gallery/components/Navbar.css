@@ -1,0 +1,227 @@
+.navbar {
+  background: white;
+  height: 80px;
+  width: 100%;
+  display: inline-block;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2rem;
+  position: fixed !important;
+  top: 0;
+  z-index: 950;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-container {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  /* padding-top: 15px; */
+  max-width: 1500px;
+  padding-left: 50px;
+}
+
+.list-icon {
+  font-size: 32px;
+  color: rgb(196, 196, 196);
+  cursor: pointer;
+}
+
+.navbar-logo {
+  color: #028174;
+  padding-left: 5rem;
+  /* margin-bottom: 2px; */
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-family: "Kanit", sans-serif;
+}
+
+.noSelect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.navbar-logo:hover {
+  text-decoration: none;
+  color: #028174;
+}
+
+.fa-typo3 {
+  margin-left: 0.5rem;
+  font-size: 1.8rem;
+}
+
+.nav-menu {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  grid-gap: 10px;
+  list-style: none;
+  text-align: center;
+  width: 75vw;
+  justify-content: end;
+  margin-right: 2rem;
+  margin-bottom: 0px;
+  height: 100%;
+}
+
+/* .nav-item {
+  height: 70px;
+} */
+
+.nav-links {
+  color: #3c9e93;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0.3rem 1rem;
+  height: 100%;
+  font-weight: 460;
+  font-size: 18px;
+  font-family: "Kanit", sans-serif;
+  /* transition: transform 0.2s; */
+  /* font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; */
+}
+
+.nav-links:hover {
+  /* border: 2px solid #3c9e93; */
+  text-decoration: none;
+  color: #3c9e93;
+  /* transform: scale(1.08); */
+  text-shadow: 0px 0px 10px #baffed;
+  border-bottom: 2px solid #3c9e93;
+}
+
+.fa-bars {
+  color: #fff;
+}
+
+.nav-links-mobile {
+  display: none;
+}
+
+.menu-icon {
+  display: none;
+}
+
+.account-section {
+  height: 55px;
+  align-self: center;
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border: 1.6px #56c9ac solid;
+  border-radius: 40px;
+  padding: 15px;
+  margin-right: 20px !important;
+  /* box-shadow: inset 0px 0px 5px #cdfff2 !important; */
+  background-image: url("https://i.ibb.co/znH0FBh/Pattern2bun-Blurat.jpg");
+  /* transition-property: width;
+  transition-duration: 4s;
+  transition-delay: 2s; */
+}
+
+.account-section:hover {
+  box-shadow: 0px 0px 10px #bffcec;
+}
+
+.photo {
+  height: 30px;
+  width: 30px;
+  border: 1.3px solid #ffffff;
+  align-self: center;
+  margin-right: 10px;
+  border-radius: 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.username {
+  font-size: 15px;
+  text-align: center;
+  text-decoration: none;
+  color: rgb(105, 105, 105);
+  font-weight: 560;
+  align-self: center;
+  font-family: "Kanit", sans-serif;
+  vertical-align: middle;
+}
+
+@media screen and (max-width: 1300px) {
+  .nav-menu {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-gap: 10px;
+    list-style: none;
+    text-align: center;
+    width: 70vw;
+    justify-content: end;
+    margin-right: 5rem;
+    margin-bottom: 0px;
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .nav-menu {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-gap: 10px;
+    list-style: none;
+    text-align: center;
+    width: 65vw;
+    justify-content: end;
+    margin-right: 5rem;
+    margin-bottom: 0px;
+    height: 100%;
+  }
+}
+
+.menu-icon {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(-100%, 60%);
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.fa-times {
+  color: rgb(255, 255, 255);
+  font-size: 2rem;
+}
+
+.nav-links-mobile {
+  display: block;
+  text-align: center;
+  margin: 2rem auto;
+  border-radius: 4px;
+  width: 80%;
+  text-decoration: none;
+  font-size: 1.5rem;
+  background-color: transparent;
+  color: #fff;
+  padding: 14px 20px;
+  border: 1px solid #fff;
+  transition: all 0.3s ease-out;
+}
+
+.nav-links-mobile:hover {
+  background: #fff;
+  color: #3c9e93;
+  text-decoration: none;
+  transition: 250ms;
+}
