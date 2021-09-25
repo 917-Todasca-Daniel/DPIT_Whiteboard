@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { SwatchesPicker  } from 'react-color';
 import ComboBox from 'react-responsive-combo-box'
@@ -31,8 +31,6 @@ const DisableScroll = () => {
 	body.style.padding = 0;
 	body.style.margin = 0;
 }
-
-DisableScroll();
 
 var drawingStyle = "freeform";
 var brushThicknessMap = new Map([
@@ -129,6 +127,10 @@ const CanvasEditor = () => {
 		else if (event.keyCode === 40) MoveSelection(0, 1);
 	}
 
+	useEffect(() => {
+		DisableScroll();
+	});
+
 	return (
 		<div onKeyUp={handleKeyPress}>
 			<div style={{display: "inline", position: "absolute", bottom: "2em", right: "3em", zIndex: 1}}>
@@ -139,7 +141,8 @@ const CanvasEditor = () => {
 				style={{width: "100%", cursor: "pointer"}}></img>
 			</div>
 			
-			<div style={{display: "inline", position: "absolute", top: "5em", left: "5em", zIndex: 1}}>
+			<div style={{display: "inline", position: "absolute", top: "5em", left: "5em", zIndex: 1}}
+			onLoad={DisableScroll}>
 				<CssTextField label="Copy text:" id="custom-css-outlined-input"
 				ref={OCRRef}
 				style={{display: "none"}}
