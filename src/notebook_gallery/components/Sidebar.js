@@ -120,7 +120,7 @@ export const Sidebar = (props) => {
                 </div>
                 <div className='sidebar-list'>
                 <div className='sidebar-bigItem noSelect' onClick={() => {setShowFolders(!showFolders)}}>
-                    <FolderIcon className=" icon" style={{ 'fontSize' : '27px'}}/>
+                    <FolderIcon className=" icon" style={{ 'fontSize' : '27px', marginRight: 10}}/>
                     Folders
                 </div>
                 <Collapse isOpened={showFolders}>
@@ -129,7 +129,7 @@ export const Sidebar = (props) => {
                             folders.map((folder) => {
                                 return (
                                 <li className='sidebar-item noSelect' onClick={handleChange, () => setNotesFromFolder(`${folder.id}`)}>
-                                    <FolderIcon className="icon" style={{'color' : folder.color}}/>
+                                    <FolderIcon className="icon" style={{'color' : folder.color, marginRight: 10}}/>
                                     {folder.name}
                                 </li>
                                 )
@@ -138,11 +138,11 @@ export const Sidebar = (props) => {
                     </ul>
                 </Collapse>
                 <div className='sidebar-bigItem noSelect' onClick={handleChange, () => setNotesFromFolder('favorites')}>
-                    <FavoriteIcon className="icon" style={{'color' : '#e97979', 'fontSize' : '28px'}}/>
+                    <FavoriteIcon className="icon" style={{'color' : '#e97979', 'fontSize' : '28px', marginRight: 10}}/>
                     Favorites
                 </div>
                 <div className='sidebar-bigItem noSelect' onClick={handleChange, () => setNotesFromFolder('deleted')}>
-                    <DeleteIcon className="icon" style={{'color' : '#727272', 'fontSize' : '28px'}}/>
+                    <DeleteIcon className="icon" style={{'color' : '#727272', 'fontSize' : '28px', marginRight: 10}}/>
                     Trashcan
                 </div>
                 </div>

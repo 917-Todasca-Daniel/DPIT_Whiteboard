@@ -13,8 +13,6 @@ var _propTypes = require("prop-types");
 
 var _stroke = require("perfect-freehand");
 
-var _clipboardCopy = require("copy-image-clipboard");
-
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _lazyBrush = require("lazy-brush");

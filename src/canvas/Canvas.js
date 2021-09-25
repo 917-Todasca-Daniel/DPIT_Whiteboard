@@ -1,7 +1,8 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { SwatchesPicker  } from 'react-color';
 import ComboBox from 'react-responsive-combo-box'
+import { Link } from 'react-router-dom';
 
 import IconButton from '@material-ui/core/IconButton';
 import CreateIcon from '@material-ui/icons/Create';
@@ -12,11 +13,12 @@ import OpenWithIcon from '@material-ui/icons/OpenWith';
 import FormatColorTextIcon from '@material-ui/icons/FormatColorText';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import ShareIcon from '@material-ui/icons/Share';
-import HomeIcon from '@material-ui/icons/Home';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Box from '@material-ui/core/Box'
 import PhotoSizeSelectLargeIcon from '@material-ui/icons/PhotoSizeSelectLarge';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
+import GridViewIcon from '@mui/icons-material/GridView';
 
 import 'react-responsive-combo-box/dist/index.css'
 import './clickthrough.css'
@@ -31,6 +33,8 @@ const DisableScroll = () => {
 	body.style.padding = 0;
 	body.style.margin = 0;
 }
+
+DisableScroll();
 
 var drawingStyle = "freeform";
 var brushThicknessMap = new Map([
@@ -64,7 +68,7 @@ const CanvasEditor = () => {
 	const [bPanning, 		setPanning] 	= useState(true);
 	const [bSelect, 		setSelection] 	= useState(false);
 	const [bSmooth, 		setSmooth] 		= useState(false);
-	const [textOCRBox,      changeOCRText]  = useState("Hello");
+	const [textOCRBox,      changeOCRText]  = useState("Selected text will appear here.");
 
 	const [brushColor, 		setBrushColor] 		= useState("#000000");
 	const [brushThickness, 	setBrushThickness] 	= useState(3);
@@ -105,7 +109,7 @@ const CanvasEditor = () => {
 		brushThicknessMap.set(drawingStyle, brushThickness);
 		drawingStylesBehaviours.get(newDrawingStyle)();
 		drawingStyle = newDrawingStyle;
-		if (drawingStyle !== "smoothing" || drawingStyle !== 'drawing' || drawingStyle !== 'smoothing') {
+		if (drawingStyle !== "smoothing" && drawingStyle !== 'freeform' && drawingStyle !== 'eraser') {
 			brushComboBoxRef.current.innerHTML = "             ";
 		}
 		setBrushThickness(brushThicknessMap.get(drawingStyle));
@@ -127,23 +131,17 @@ const CanvasEditor = () => {
 		else if (event.keyCode === 40) MoveSelection(0, 1);
 	}
 
-	useEffect(() => {
-		DisableScroll();
-	});
-
 	return (
 		<div onKeyUp={handleKeyPress}>
 			<div style={{display: "inline", position: "absolute", bottom: "2em", right: "3em", zIndex: 1}}>
-				<img src="https://i.ibb.co/wzsHBym/add-button.png" onClick={() => { IncremenentPageCount(); 
+				<AddCircleIcon style={{'fontSize': '65px', 'transition': 'transform 0.2s'}} className='add-btn' onClick={() => { IncremenentPageCount(); 
 				if (drawingStyle === "selection") {
 					setDrawingStyle("panning"); 
-				 } }} 
-				style={{width: "100%", cursor: "pointer"}}></img>
+				 }}} />
 			</div>
 			
-			<div style={{display: "inline", position: "absolute", top: "5em", left: "5em", zIndex: 1}}
-			onLoad={DisableScroll}>
-				<CssTextField label="Copy text:" id="custom-css-outlined-input"
+			<div style={{display: "inline", position: "absolute", top: "5em", left: "5em", zIndex: 1}}>
+				<CssTextField label="" id="custom-css-outlined-input"
 				ref={OCRRef}
 				style={{display: "none"}}
 				// InputProps={{
@@ -158,13 +156,13 @@ const CanvasEditor = () => {
 			<div className="dashed-border" style={{zIndex: 1}}>
 			</div>
 			
-			<div className="clickthrough_container" style={{display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#FBFBFB", padding: "5px", boxShadow: "inset 0px 27px 18px -30px rgba(163,163,163,0.62)"}}>
+			<div className="clickthrough_container" style={{display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#FBFBFB", padding: "5px"}}>
 				<IconButton style={{color: "#373936"}} onClick={() => { Undo(); }}> <UndoIcon/> </IconButton>
 				<IconButton style={{color: "#373936"}} onClick={() => { Redo(); }}> <RedoIcon/> </IconButton>
 
 				<Box mx={3}></Box>
 
-				<IconButton style={{color: "#373936", backgroundColor: "#E8E8E8"}} onClick={() => { setDrawingStyle('freeform'); }} ref={freeformIconRef}> <CreateIcon/> </IconButton>
+				<IconButton style={{color: "#373936", backgroundColor: "#E8E8E8", marginRight: 0}} onClick={() => { setDrawingStyle('freeform'); }} ref={freeformIconRef}> <CreateIcon/> </IconButton>
 				<IconButton style={{color: "#373936"}} onClick={() => { setDrawingStyle('smoothing'); }} ref={smoothIconRef}> <AutoFixHighIcon/> </IconButton>
 				<IconButton style={{color: "#373936"}} onClick={() => { setDrawingStyle('eraser'); }} ref={eraserIconRef}> <ClearAllIcon/> </IconButton>
 				<IconButton style={{color: "#373936"}} onClick={() => { setDrawingStyle('panning'); }} ref={panningIconRef}> <OpenWithIcon/> </IconButton>
@@ -176,23 +174,25 @@ const CanvasEditor = () => {
 					options={brushSizeOptions}
 					onSelect={(option) => { setBrushThickness(option); 
 						brushComboBoxRef.current.innerHTML = option;
-						if (drawingStyle !== "smoothing" || drawingStyle !== 'drawing' || drawingStyle !== 'smoothing') {
+						if (drawingStyle !== "smoothing" && drawingStyle !== 'freeform' && drawingStyle !== 'eraser') {
 							brushComboBoxRef.current.innerHTML = "             ";
 						}
 					}
 				}>
 				</ComboBox>
-				<p className="clickthrough" ref={brushComboBoxRef} style={{position: "absolute", marginLeft: "14.7em", padding: "0.5em", backgroundColor: "#FBFBFB", zOrder: 2}}> 3 </p>
+				<p className="clickthrough" ref={brushComboBoxRef} style={{position: "absolute", marginLeft: "16.0em", marginTop: "1em", padding: "0.6em", backgroundColor: "#FBFBFB", zOrder: 2}}> 3 </p>
 
 				<IconButton style={{color: "#373936"}} onClick={() => { colorPickerRef.current.style.display = "inline"; }}> <FormatColorTextIcon/> </IconButton>
 
 				<Box mx={3}></Box>
 
 				<IconButton style={{color: "#17C69A"}}> <ShareIcon/> </IconButton>
-				<IconButton style={{color: "#17C69A"}}> <HomeIcon/> </IconButton>
+				<Link to='/repo' style={{'textDecoration': 'none',  'color': 'inherit'}}>
+				<IconButton style={{color: "#17C69A"}}> <GridViewIcon/> </IconButton>
+				</Link>
 			</div>
 
-			<div style={{backgroundColor: "#FBFBFB", boxShadow: "inset 0px 27px 18px -30px rgba(163,163,163,0.62)", padding: "1px", position:"relative"}}>
+			<div style={{backgroundColor: "#FBFBFB", boxShadow: "inset 1px 1px 5px rgba(0, 0, 0, 0.2)", padding: "1px", position:"relative"}}>
 				<div ref={colorPickerRef} style={{display: "none", position: "absolute", marginLeft: "40%", marginTop: "2em", zIndex: 1}}>
 					<SwatchesPicker width={300} height={150} color={brushColor} onChange={(event) => {
 						setBrushColor(event.hex);

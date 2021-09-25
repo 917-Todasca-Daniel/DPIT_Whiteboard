@@ -13,7 +13,7 @@ const EnableScroll = () => {
     body.style.overflow = 'auto'; 
 }
 
-const Homepage = () => {
+export const Homepage = () => {
 	useEffect(() => {
 		EnableScroll();
 	});
@@ -22,8 +22,6 @@ const Homepage = () => {
 		
 		<div>
 			<Navbar />
-			<h1>Homepage </h1>
-			<Link to='/repo'>Go to Notebook Repository</Link>
 			<Home/>
 			<Footer />
 		</div>

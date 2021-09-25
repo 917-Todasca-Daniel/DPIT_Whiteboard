@@ -1,4 +1,4 @@
-.navbar {
+.home_navbar {
     background: #fff;
     height: 80px;
     display: flex;
@@ -10,7 +10,7 @@
     z-index: 999;
   }
   
-  .navbar-container {
+  .home_navbar-container {
     display: flex;
     justify-content: space-between;
     height: 80px;
@@ -28,7 +28,7 @@
     box-shadow: #000000;
   }
   
-  .navbar-logo {
+  .home_navbar-logo {
     color: #028174;
     justify-self: start;
     cursor: pointer;
@@ -39,11 +39,11 @@
     font-family: "Prompt";
   }
   
-  .navbar-icon {
+  .home_navbar-icon {
     margin-right: 0.5rem;
   }
   
-  .nav-menu {
+  .home_nav-menu {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -52,17 +52,17 @@
     justify-content: end;
   }
   
-  .nav-item {
+  .home_nav-item {
     height: 80px;
     border-bottom: 2px solid transparent;
     font-family: 'Molengo';
   }
   
-  .nav-item:hover {
+  .home_nav-item:hover {
     border-bottom: 2px solid #000000;
   }
   
-  .nav-links {
+  .home_nav-links {
     color: #13c79a;
     display: flex;
     align-items: center;
@@ -80,11 +80,11 @@
   }
   
   @media screen and (max-width: 960px) {
-    .NavbarItems {
+    .home_navbarItems {
       position: relative;
     }
   
-    .nav-menu {
+    .home_nav-menu {
       display: flex;
       flex-direction: column;
       width: 100%;
@@ -96,7 +96,7 @@
       transition: all 0.5s ease;
     }
   
-    .nav-menu.active {
+    .home_nav-menu.active {
       background: #fff;
       left: 0;
       opacity: 1;
@@ -104,28 +104,28 @@
       z-index: 1;
     }
   
-    .nav-links {
+    .home_nav-links {
       text-align: center;
       padding: 2rem;
       width: 100%;
       display: table;
     }
   
-    .nav-links:hover {
+    .home_nav-links:hover {
       color: #13c79a;
       transform: scale(1.2);
       transition: all 0.3s ease;
     }
   
-    .nav-item:hover {
+    .home_nav-item:hover {
       border: none;
     }
   
-    .nav-item {
+    .home_nav-item {
       width: 100%;
     }
   
-    .navbar-logo {
+    .home_navbar-logo {
       position: absolute;
       top: 0;
       left: 0;
@@ -147,7 +147,7 @@
       font-size: 2rem;
     }
   
-    .nav-btn {
+    .home_nav-btn {
       display: flex;
       justify-content: center;
       align-items: center;
