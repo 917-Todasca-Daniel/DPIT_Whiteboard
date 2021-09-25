@@ -5,7 +5,7 @@
         "title":"OOP",
         "date":"18/03/2021",
         "isFavorite":false,
-        "image":"https://image.shutterstock.com/z/stock-vector-notebook-cover-with-floral-background-and-place-for-text-vector-notepad-cover-crumpled-paper-370759844.jpg",
+        "image":"https://i.ibb.co/DG4kzFr/output-onlinepngtools-2.png",
         "isDeleted": false
     },
     {
@@ -14,7 +14,7 @@
         "title":"Algebra Formulas",
         "date":"11/12/2020",
         "isFavorite":false,
-        "image":"https://i.pinimg.com/550x/fa/ea/03/faea03fed396199c91ce7421ad5622e8.jpg",
+        "image":"https://i.ibb.co/yq9DcKX/output-onlinepngtools-1.png",
         "isDeleted": false
     },
     {
@@ -23,7 +23,7 @@
         "title":"English Homework",
         "date":"13/02/2021",
         "isFavorite":false,
-        "image":"https://media.istockphoto.com/vectors/notebook-cover-vector-id656037464?s=612x612",
+        "image":"https://i.ibb.co/PMJLXFh/output-onlinepngtools-4.png",
         "isDeleted": false
     },
     {
@@ -32,7 +32,7 @@
         "title":"Spanish Lesson 3",
         "date":"18/08/2021",
         "isFavorite":true,
-        "image":"https://images-na.ssl-images-amazon.com/images/I/51-gf3bz3CL.jpg",
+        "image":"https://i.ibb.co/J7FSVPS/output-onlinepngtools-1.png",
         "isDeleted": false
     },
     {
@@ -41,7 +41,7 @@
         "title":"Physics 1",
         "date":"22/11/2020",
         "isFavorite":true,
-        "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnFV6E-gaY_HaRjn-CgGnI9N5z-Ov_pu8-0Mynr3USat0i7pv6zC5be3ZgKPnfj2oaeCs&usqp=CAU",
+        "image":"https://i.ibb.co/Sv8ZGtn/output-onlinepngtools.png",
         "isDeleted": false
     },
     {
@@ -50,7 +50,7 @@
         "title":"Geometry Cheatsheet",
         "date":"13/11/2019",
         "isFavorite":true,
-        "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp90VgIRjzVQuWy6imcYJOKdt0KvrI-F8RowkaapZuG2kkdGiGx9Gc6xjUH_mOzZznruQ&usqp=CAU",
+        "image":"https://i.ibb.co/5FS1Q4X/output-onlinepngtools-5.png",
         "isDeleted": false
     },
     {
@@ -59,7 +59,7 @@
         "title":"Operating Systems Course3",
         "date":"10/11/2020",
         "isFavorite":false,
-        "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr0BOU0pTrdePlM9mpOq_Pb9_1ll8pGavrkA9G5981NXBTvN9hq0xw5g3DpwTuzla1YhM&usqp=CAU",
+        "image":"https://i.ibb.co/HKR00zH/output-onlinepngtools-3.png",
         "isDeleted": false
     }
 ]

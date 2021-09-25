@@ -6,7 +6,6 @@
   overflow-y: hidden;
   height: fit-content;
   max-height: calc(100vh - 80px) !important;
-  /* background-image: url("https://i.ibb.co/fStGr21/wowpatterns-export-1.png"); */
 }
 
 .gallery:hover {
@@ -137,7 +136,30 @@
   grid-template-rows: auto auto 2fr 2fr 2fr auto auto;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (min-width: 1750px) {
+  .card-section--big {
+    margin-top: -7px;
+    padding-left: 20px;
+    height: 100vh;
+    width: auto;
+    display: grid;
+    grid-template-columns: repeat(7, 2fr);
+    grid-template-rows: auto auto 2fr 2fr 2fr auto auto;
+  }
+
+  .card-section--small {
+    margin-top: -7px;
+    /* height: 100vh; */
+    /* display: block; */
+    overflow: auto;
+    width: auto;
+    display: grid;
+    grid-template-columns: repeat(6, 2fr);
+    grid-template-rows: auto auto 2fr 2fr 2fr auto auto;
+  }
+}
+
+@media screen and (max-width: 1300px) {
   .card-section--big {
     margin-top: -7px;
     padding-left: 20px;

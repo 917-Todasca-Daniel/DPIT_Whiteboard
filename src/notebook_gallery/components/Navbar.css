@@ -1,10 +1,10 @@
-.navbar {
+.nb-navbar {
   background: white;
   height: 80px;
   width: 100%;
-  display: inline-block;
+  display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-between !important;
   align-items: center;
   font-size: 1.2rem;
   position: fixed !important;
@@ -14,20 +14,21 @@
 }
 
 .navbar-container {
-  position: fixed;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 80px;
-  width: 100%;
+  align-self: center;
+  height: 100%;
+  width: fit-content;
   /* padding-top: 15px; */
   padding-left: 50px;
+  margin-right: 100px;
 }
 
 .list-icon {
   font-size: 32px;
   color: rgb(196, 196, 196);
   cursor: pointer;
+  align-self: center;
 }
 
 .navbar-logo {
@@ -62,17 +63,15 @@
   font-size: 1.8rem;
 }
 
-.nav-menu {
+.nb-nav-menu {
   display: grid;
   grid-template-columns: repeat(4, auto);
   grid-gap: 10px;
   list-style: none;
-  text-align: center;
-  width: 75vw;
-  justify-content: end;
-  margin-right: 2rem;
-  margin-bottom: 0px;
+  align-self: center;
   height: 100%;
+  margin-bottom: 0;
+  margin-right: 90px;
 }
 
 /* .nav-item {
@@ -126,10 +125,7 @@
   padding: 15px;
   margin-right: 20px !important;
   /* box-shadow: inset 0px 0px 5px #cdfff2 !important; */
-  background-image: url("https://i.ibb.co/znH0FBh/Pattern2bun-Blurat.jpg");
-  /* transition-property: width;
-  transition-duration: 4s;
-  transition-delay: 2s; */
+  background-image: url("https://i.ibb.co/fStGr21/wowpatterns-export-1.png");
 }
 
 .account-section:hover {
@@ -137,11 +133,11 @@
 }
 
 .photo {
-  height: 30px;
-  width: 30px;
+  height: 36px;
+  width: 36px;
   border: 1.3px solid #ffffff;
   align-self: center;
-  margin-right: 10px;
+  margin-right: 5px;
   border-radius: 50%;
   background-size: cover;
   background-repeat: no-repeat;
