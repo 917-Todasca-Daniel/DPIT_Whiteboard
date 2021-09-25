@@ -36,14 +36,14 @@
     font-size: 2rem;
     display: flex;
     align-items: center;
-    font-family: "Prompt";
+    font-home_family: "Prompt";
   }
   
   .home_navbar-icon {
     margin-right: 0.5rem;
   }
   
-  .home_nav-menu {
+  .home_nav-home_menu {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -55,7 +55,7 @@
   .home_nav-item {
     height: 80px;
     border-bottom: 2px solid transparent;
-    font-family: 'Molengo';
+    font-home_family: 'Molengo';
   }
   
   .home_nav-item:hover {
@@ -71,11 +71,11 @@
     height: 100%;
   }
   
-  .fa-bars {
+  .home_fa-bars {
     color: #13c79a;
   }
   
-  .menu-icon {
+  .home_menu-icon {
     display: none;
   }
   
@@ -84,7 +84,7 @@
       position: relative;
     }
   
-    .home_nav-menu {
+    .home_nav-home_menu {
       display: flex;
       flex-direction: column;
       width: 100%;
@@ -96,7 +96,7 @@
       transition: all 0.5s ease;
     }
   
-    .home_nav-menu.active {
+    .home_nav-home_menu.active {
       background: #fff;
       left: 0;
       opacity: 1;
@@ -132,7 +132,7 @@
       transform: translate(25%, 50%);
     }
   
-    .menu-icon {
+    .home_menu-icon {
       display: block;
       position: absolute;
       top: 0;
@@ -142,7 +142,7 @@
       cursor: pointer;
     }
   
-    .fa-times {
+    .home_fa-times {
       color: #13c79a;
       font-size: 2rem;
     }
