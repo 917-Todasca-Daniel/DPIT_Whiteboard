@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { GiWhiteBook } from 'react-icons/gi';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { Button } from './Button';
+import './Button.css'
 import './Navbar.css';
 import { IconContext } from 'react-icons/lib'
 
@@ -37,10 +38,10 @@ function Navbar() {
                         WhiteBoard
                     </Link>
 
-                    <div className="menu-icon" onClick={handleClick}>
+                    <div className="home_menu-icon" onClick={handleClick}>
                         {click ? <FaTimes /> : <FaBars /> }
                     </div>
-                    <ul className={click ? 'home_nav-menu active' : 'home_nav-menu'}> 
+                    <ul className={click ? 'home_nav-home_menu active' : 'home_nav-home_menu'}> 
                         <li className="home_nav-item">
                             <Link to='/how-it-works' className="home_nav-links" onClick={closeMobileMenu}>
                                 How it works
