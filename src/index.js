@@ -3,7 +3,7 @@ import './index.css';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Homepage, CanvasEditor } from './App';
-import { NotebookRepository } from './NotebookRepository'
+import { NotebookRepository } from './notebook_gallery/NotebookRepository'
 
 ReactDOM.render(
     <Router>
