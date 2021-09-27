@@ -57,33 +57,33 @@ function Navbar() {
                                 Contact
                             </Link>
                         </li>
-                        <li className="home_nav-btn">
+                        <li className="home_nav-home_btn">
                             {button ? (
-                                <Link to='/log-in' className="btn-link" onClick={closeMobileMenu}>
-                                    <Button buttonStyle='btn--outline-dark'>
+                                <Link to='/log-in' className="home_btn-link" onClick={closeMobileMenu}>
+                                    <Button buttonStyle='home_btn--outline-dark'>
                                     Log In
                                     </Button>
                                 </Link>
                             ) : (
-                                <Link to='/log-in' className="btn-link" onClick={closeMobileMenu}>
-                                    <Button buttonStyle='btn--outline-dark'
-                                            buttonSize='btn--mobile'>
+                                <Link to='/log-in' className="home_btn-link" onClick={closeMobileMenu}>
+                                    <Button buttonStyle='home_btn--outline-dark'
+                                            buttonSize='home_btn--mobile'>
                                     Log In
                                     </Button>
                                 </Link>   
                             )}
                         </li>
-                        <li className="home_nav-btn">
+                        <li className="home_nav-home_btn">
                             {button ? (
-                                <Link to='/sign-up' className="btn-link" onClick={closeMobileMenu}>
-                                    <Button buttonStyle='btn--outline-light'>
+                                <Link to='/sign-up' className="home_btn-link" onClick={closeMobileMenu}>
+                                    <Button buttonStyle='home_btn--outline-light'>
                                     Sign Up
                                     </Button>
                                 </Link>
                             ) : (
-                                <Link to='/sign-up' className="btn-link" onClick={closeMobileMenu}>
-                                    <Button buttonStyle='btn--outline-light'
-                                            buttonSize='btn--mobile'>
+                                <Link to='/sign-up' className="home_btn-link" onClick={closeMobileMenu}>
+                                    <Button buttonStyle='home_btn--outline-light'
+                                            buttonSize='home_btn--mobile'>
                                     Sign Up
                                     </Button>
                                 </Link>   
