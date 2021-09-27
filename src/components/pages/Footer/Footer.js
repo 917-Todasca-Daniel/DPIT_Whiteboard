@@ -38,8 +38,7 @@ function Footer() {
         <div className='social-media-wrap'>
           <div className='footer-logo'>
             <Link to='/' className='social-logo'>
-              <GiWhiteBook className='navbar-icon' />
-              WhiteBoard
+                        <img src={'logo_white.PNG'} style={{width: 150}} className='navbar-icon'/>
             </Link>
           </div>
           <small className='website-rights'>WhiteBoard © 2021</small>

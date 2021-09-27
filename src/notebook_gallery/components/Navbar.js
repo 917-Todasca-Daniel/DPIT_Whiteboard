@@ -16,7 +16,7 @@ const Navbar = () => {
                 <div className="navbar-container">
                    <List className="bi bi-list list-icon" onClick={() => setIsSidebar(!isSidebar)}/>
                    <Link to="/" className="navbar-logo noSelect">
-                      Writeboard    
+                        <img src={'logo.PNG'} style={{width: 150}}/>
                    </Link>    
                 </div>   
                 <ul className='nb-nav-menu'>

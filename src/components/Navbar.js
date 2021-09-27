@@ -34,8 +34,7 @@ function Navbar() {
             <div className="home_navbar">
                 <div className="home_navbar-container container">
                     <Link to= '/' className="home_navbar-logo" onClick={closeMobileMenu}>
-                        <GiWhiteBook className='home_navbar-icon'></GiWhiteBook>
-                        WhiteBoard
+                        <img src={'logo.PNG'} style={{width: 150}} className='home__hero-img'/>
                     </Link>
 
                     <div className="home_menu-icon" onClick={handleClick}>
@@ -59,13 +58,13 @@ function Navbar() {
                         </li>
                         <li className="home_nav-home_btn">
                             {button ? (
-                                <Link to='/log-in' className="home_btn-link" onClick={closeMobileMenu}>
+                                <Link to='/repo' className="home_btn-link" onClick={closeMobileMenu}>
                                     <Button buttonStyle='home_btn--outline-dark'>
                                     Log In
                                     </Button>
                                 </Link>
                             ) : (
-                                <Link to='/log-in' className="home_btn-link" onClick={closeMobileMenu}>
+                                <Link to='/repo' className="home_btn-link" onClick={closeMobileMenu}>
                                     <Button buttonStyle='home_btn--outline-dark'
                                             buttonSize='home_btn--mobile'>
                                     Log In
