@@ -15,8 +15,9 @@ import { Dropdown } from 'semantic-ui-react'
 
 
 // Fake Json APIs for testing
-const notebook_url = 'https://mocki.io/v1/b2a6b962-ada2-4c6b-8bb9-1df04d4e6027';  
-const cover_url = 'https://mocki.io/v1/590c2c5a-a010-49cb-b0e3-2b1524921e8f';
+const notebook_url = 'https://mocki.io/v1/5b073560-9d5c-4289-9d07-790ae8b59876';  
+// const cover_url = 'https://mocki.io/v1/590c2c5a-a010-49cb-b0e3-2b1524921e8f';
+const cover_url = 'https://mocki.io/v1/5664ee9c-96c0-416b-876c-f15dfc1d4337';
 
 
 export const randomNumber = (min, max) => {

@@ -112,7 +112,7 @@ export const Sidebar = (props) => {
             <React.Fragment>
                 <div className='input-section'>
                     <input className='inputStyle noSelect' 
-                    type="text" placeholder='   search for folders..' 
+                    type="text" placeholder='   Search for folders..' 
                     name='Search'
                     onChange={event => setInput(event.target.value)}
                     />

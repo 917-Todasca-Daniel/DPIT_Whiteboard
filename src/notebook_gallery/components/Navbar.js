@@ -7,38 +7,21 @@ import { GallerySection } from './GallerySection';
 
 
 const Navbar = () => {
-    const [click, setClick] = useState(false);
-    const [button, setButton] = useState(true);
-
-    const handleClick = () => setClick(!click);
-    const closeMobileMenu = () => setClick(false);
-
-    const showButton = () => {
-        if(window.innerWidth <= 960)
-        {
-            setButton(false);
-        }
-        else
-        {
-            setButton(true);
-        }
-    };
-
-    window.addEventListener('resize', showButton);
 
     const [isSidebar, setIsSidebar] = useState(true);
 
     return (
         <React.Fragment>
-            <nav className='navbar'>
-            <div className="navbar-container">
+            <nav className='nb-navbar'>
+                <div className="navbar-container">
                    <List className="bi bi-list list-icon" onClick={() => setIsSidebar(!isSidebar)}/>
                    <Link to="/" className="navbar-logo noSelect">
                       Writeboard    
                    </Link>    
-                   <ul className='nav-menu'>
+                </div>   
+                <ul className='nb-nav-menu'>
                        <div className='account-section'>
-                            <div className='photo' style={{'backgroundImage' : 'url(https://i.ibb.co/qd9DnFW/images.jpg)'}}></div>
+                            <div className='photo' style={{'backgroundImage' : 'url(https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg'}}></div>
                             <p className='username'>Username Here</p>
                        </div>
                        <li className='nav-item noSelect'>
@@ -51,8 +34,7 @@ const Navbar = () => {
                                 LOG OUT
                            </Link>
                        </li>
-                   </ul>
-                </div>     
+                   </ul> 
             </nav>
             <Sidebar 
                 sidebarState={[isSidebar, setIsSidebar]} />
