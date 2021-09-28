@@ -23,6 +23,7 @@
     "catenary-curve": "^1.0.1",
     "cdbreact": "^1.1.0",
     "lazy-brush": "^1.0.1",
+    "netlify": "^8.0.1",
     "perfect-freehand": "^1.0.12",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",

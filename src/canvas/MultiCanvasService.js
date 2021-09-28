@@ -1,4 +1,4 @@
-import CanvasDraw from "./CanvasDraw";
+import * as CanvasDraw from "./CanvasDraw";
 import React, { useState, useRef } from 'react';
 
 var history = [];
