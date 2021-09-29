@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/DPIT_Whiteboard/static/css/main.9fcc7ca6.chunk.css",
-    "main.js": "/DPIT_Whiteboard/static/js/main.0c177eeb.chunk.js",
-    "main.js.map": "/DPIT_Whiteboard/static/js/main.0c177eeb.chunk.js.map",
-    "runtime-main.js": "/DPIT_Whiteboard/static/js/runtime-main.1048de3e.js",
-    "runtime-main.js.map": "/DPIT_Whiteboard/static/js/runtime-main.1048de3e.js.map",
-    "static/css/2.4bef2922.chunk.css": "/DPIT_Whiteboard/static/css/2.4bef2922.chunk.css",
-    "static/js/2.f9a26a76.chunk.js": "/DPIT_Whiteboard/static/js/2.f9a26a76.chunk.js",
-    "static/js/2.f9a26a76.chunk.js.map": "/DPIT_Whiteboard/static/js/2.f9a26a76.chunk.js.map",
-    "index.html": "/DPIT_Whiteboard/index.html",
-    "static/css/2.4bef2922.chunk.css.map": "/DPIT_Whiteboard/static/css/2.4bef2922.chunk.css.map",
-    "static/css/main.9fcc7ca6.chunk.css.map": "/DPIT_Whiteboard/static/css/main.9fcc7ca6.chunk.css.map",
-    "static/js/2.f9a26a76.chunk.js.LICENSE.txt": "/DPIT_Whiteboard/static/js/2.f9a26a76.chunk.js.LICENSE.txt",
-    "static/media/semantic.min.css": "/DPIT_Whiteboard/static/media/outline-icons.ddae9b1b.woff"
+    "main.css": "/dpit-writeboard/static/css/main.9fcc7ca6.chunk.css",
+    "main.js": "/dpit-writeboard/static/js/main.0c177eeb.chunk.js",
+    "main.js.map": "/dpit-writeboard/static/js/main.0c177eeb.chunk.js.map",
+    "runtime-main.js": "/dpit-writeboard/static/js/runtime-main.5fce28f4.js",
+    "runtime-main.js.map": "/dpit-writeboard/static/js/runtime-main.5fce28f4.js.map",
+    "static/css/2.26a06a8f.chunk.css": "/dpit-writeboard/static/css/2.26a06a8f.chunk.css",
+    "static/js/2.f9a26a76.chunk.js": "/dpit-writeboard/static/js/2.f9a26a76.chunk.js",
+    "static/js/2.f9a26a76.chunk.js.map": "/dpit-writeboard/static/js/2.f9a26a76.chunk.js.map",
+    "index.html": "/dpit-writeboard/index.html",
+    "static/css/2.26a06a8f.chunk.css.map": "/dpit-writeboard/static/css/2.26a06a8f.chunk.css.map",
+    "static/css/main.9fcc7ca6.chunk.css.map": "/dpit-writeboard/static/css/main.9fcc7ca6.chunk.css.map",
+    "static/js/2.f9a26a76.chunk.js.LICENSE.txt": "/dpit-writeboard/static/js/2.f9a26a76.chunk.js.LICENSE.txt",
+    "static/media/semantic.min.css": "/dpit-writeboard/static/media/outline-icons.ddae9b1b.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.1048de3e.js",
-    "static/css/2.4bef2922.chunk.css",
+    "static/js/runtime-main.5fce28f4.js",
+    "static/css/2.26a06a8f.chunk.css",
     "static/js/2.f9a26a76.chunk.js",
     "static/css/main.9fcc7ca6.chunk.css",
     "static/js/main.0c177eeb.chunk.js"
