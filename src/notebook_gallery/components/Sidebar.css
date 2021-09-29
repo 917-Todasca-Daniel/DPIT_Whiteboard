@@ -1,0 +1,171 @@
+.css-12i7wg6-MuiPaper-root-MuiDrawer-paper {
+  background-image: url("https://i.ibb.co/fStGr21/wowpatterns-export-1.png");
+  margin-top: 80px;
+  width: 330px;
+  /* position: fixed; */
+  height: 100% !important;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2) !important;
+  border-right: 0px !important;
+  z-index: 900 !important;
+}
+
+.sidebar-container::-webkit-scrollbar {
+  display: none;
+}
+
+.css-x6wso {
+  margin-top: 0px !important;
+  padding: 0px !important;
+}
+
+.css-1glmkqa {
+  margin-top: 0px !important;
+  padding: 0px !important;
+}
+
+.sidebar-container {
+  flex-flow: column wrap;
+  overflow-y: hidden;
+  max-height: calc(100vh - 80px) !important;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  /* overflow-y: hidden; */
+}
+
+.sidebar-container:hover {
+  overflow: overlay;
+  overflow: scroll;
+}
+
+.input-section {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+
+.sidebar-list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3px !important;
+  flex-wrap: wrap;
+}
+
+.sidebar-bigItem {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  margin-top: 15px;
+  padding-bottom: 10px;
+  padding-left: 40px;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: "Kanit", sans-serif;
+  cursor: pointer;
+}
+
+.ReactCollapse--collapse {
+  transition: height 200ms;
+}
+
+.sidebar-item {
+  color: #252525;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 12px 50px 5px 43px;
+  /* margin-right: 90px; */
+  font-size: 15px;
+  font-weight: 700;
+  font-family: "Kanit", sans-serif;
+  cursor: pointer;
+}
+
+.sidebar-item:hover {
+  font-weight: 600;
+}
+
+.MuiSvgIcon-root {
+  font-size: 24px;
+}
+
+.MuiSvgIcon-root:hover {
+  transform: scale(1.08);
+}
+
+.yellow {
+  color: #e6f057;
+}
+
+.blue {
+  color: #37b9e4;
+}
+
+.red {
+  color: #e97979;
+}
+
+.magenta {
+  color: #912eaa;
+}
+
+.grey {
+  color: #1d1d1d;
+}
+
+.green {
+  color: #5f5f564b;
+}
+
+.inputStyle {
+  /* align-items: center; */
+  border: 1.6px #56c9ac solid;
+  margin-top: 44px;
+  margin-left: 40px;
+  padding: 12px;
+  width: 13rem;
+  border-radius: 40px;
+  /* align-self: center; */
+  outline: none;
+  height: 20px;
+}
+
+.inputStyle::placeholder {
+  font-size: 14px;
+  font-family: "Kanit", sans-serif;
+}
+
+.noSelect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.add-file-button {
+  font-size: 36px !important;
+  font-weight: 600;
+  color: #3eac90;
+  margin-top: 41px;
+  margin-left: 16px;
+  cursor: pointer;
+}
+
+.add-file-btn:hover {
+  font-size: 32px;
+  color: rgb(48, 116, 101);
+  cursor: pointer;
+}
+
+.sidebar-footer {
+  height: 100px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  border-top: 1.5px solid rgb(177, 177, 177);
+  background-color: white;
+}
