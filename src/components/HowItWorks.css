@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: #fafafa;
+  background: #FFF;
 }
 
 .pricing__container-card {
@@ -16,7 +16,7 @@
 }
 
 .pricing__container-card:nth-child(2) {
-  transform: scale(1.05);
+  
   background: #13c79a;
 }
 
