@@ -32,7 +32,7 @@ import TodascaDaniel from './TodascaDaniel.jpeg';
 
 function HowItWorks() {
   return (
-    <IconContext.Provider value={{ color: '#fff', size: 64 }}>
+    <IconContext.Provider value={{ color: '#fff', size: 64, margin: 24 }}>
       <div className='pricing__section'>
         <div className='pricing__wrapper'>
           <h1 className='pricing__heading'>About us</h1>
