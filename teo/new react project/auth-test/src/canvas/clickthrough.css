@@ -1,0 +1,7 @@
+.clickthrough {
+    position: absolute;
+}
+
+.clickthrough_container:hover .clickthrough {
+    pointer-events: none;
+}

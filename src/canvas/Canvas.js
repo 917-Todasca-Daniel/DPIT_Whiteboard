@@ -20,10 +20,14 @@ import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 import GridViewIcon from '@mui/icons-material/GridView';
 
+import { SvgIcon } from '@mui/material';
+
 import 'react-responsive-combo-box/dist/index.css'
 import './clickthrough.css'
 
 import { Undo, Redo, MultiPageCanvas, IncremenentPageCount, Paste, MoveSelection, StopSelection } from './MultiCanvasService.js'
+
+document.title = "Writeboard";
 
 const DisableScroll = () => {
 	const safeDocument = typeof document !== 'undefined' ? document : {};
@@ -164,7 +168,14 @@ const CanvasEditor = () => {
 
 				<IconButton style={{color: "#373936", backgroundColor: "#E8E8E8", marginRight: 0}} onClick={() => { setDrawingStyle('freeform'); }} ref={freeformIconRef}> <CreateIcon/> </IconButton>
 				<IconButton style={{color: "#373936"}} onClick={() => { setDrawingStyle('smoothing'); }} ref={smoothIconRef}> <AutoFixHighIcon/> </IconButton>
-				<IconButton style={{color: "#373936"}} onClick={() => { setDrawingStyle('eraser'); }} ref={eraserIconRef}> <ClearAllIcon/> </IconButton>
+				<IconButton style={{color: "#373936"}} onClick={() => { setDrawingStyle('eraser'); }} ref={eraserIconRef}> <SvgIcon>
+				<g transform="translate(-2.000000,27.000000) scale(0.1650000,-0.1650000)"
+				fill="#000000" stroke="none">
+				<path d="M52 97 c-41 -42 -42 -44 -24 -60 28 -25 44 -21 85 21 l37 38 -23 22
+				c-13 12 -25 22 -28 22 -3 0 -24 -19 -47 -43z m26 -54 c-14 -14 -20 -14 -33 -3
+				-14 12 -14 15 2 32 15 17 18 17 32 3 14 -13 14 -17 -1 -32z"/>
+				</g>
+					</SvgIcon> </IconButton>
 				<IconButton style={{color: "#373936"}} onClick={() => { setDrawingStyle('panning'); }} ref={panningIconRef}> <OpenWithIcon/> </IconButton>
 				<IconButton style={{color: "#373936"}} onClick={() => { setDrawingStyle('selection'); }} ref={selectionIconRef}> <PhotoSizeSelectLargeIcon/> </IconButton>
 

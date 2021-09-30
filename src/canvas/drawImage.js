@@ -2,10 +2,6 @@ exports.__esModule = true;
 exports.default = drawImageProp;
 
 
-// fixed
-// sticky-top
-
-
 /** 
  * Original from: https://stackoverflow.com/questions/21961839/simulation-background-size-cover-in-canvas
  * Original By Ken Fyrstenberg Nilsen

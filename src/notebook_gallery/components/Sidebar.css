@@ -1,4 +1,4 @@
-.css-12i7wg6-MuiPaper-root-MuiDrawer-paper {
+.MuiPaper-root {
   background-image: url("https://i.ibb.co/fStGr21/wowpatterns-export-1.png");
   margin-top: 80px;
   width: 330px;
@@ -9,7 +9,7 @@
   z-index: 900 !important;
 }
 
-.sidebar-container::-webkit-scrollbar {
+.repo_sidebar-container::-webkit-scrollbar {
   display: none;
 }
 
@@ -23,7 +23,7 @@
   padding: 0px !important;
 }
 
-.sidebar-container {
+.repo_sidebar-container {
   flex-flow: column wrap;
   overflow-y: hidden;
   max-height: calc(100vh - 80px) !important;
@@ -32,7 +32,7 @@
   /* overflow-y: hidden; */
 }
 
-.sidebar-container:hover {
+.repo_sidebar-container:hover {
   overflow: overlay;
   overflow: scroll;
 }
@@ -45,7 +45,7 @@
   align-content: center;
 }
 
-.sidebar-list {
+.repo_sidebar-list {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -53,7 +53,7 @@
   flex-wrap: wrap;
 }
 
-.sidebar-bigItem {
+.repo_sidebar-bigItem {
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -70,7 +70,7 @@
   transition: height 200ms;
 }
 
-.sidebar-item {
+.repo_sidebar-item {
   color: #252525;
   display: flex;
   align-items: center;
@@ -83,7 +83,7 @@
   cursor: pointer;
 }
 
-.sidebar-item:hover {
+.repo_sidebar-item:hover {
   font-weight: 600;
 }
 
@@ -161,7 +161,7 @@
   cursor: pointer;
 }
 
-.sidebar-footer {
+.repo_sidebar-footer {
   height: 100px;
   width: 100%;
   position: absolute;

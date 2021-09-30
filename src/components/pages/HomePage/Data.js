@@ -5,10 +5,11 @@ export const homeObjOne = {
     topLine: 'For students by students',
     headline: 'Learn, organize, reach your goals',
     description:
-      'Get access to our notes-taking app that ...',
+      'Write everything right. Simple as that.',
     buttonLabel: 'Sign up now',
     imgStart: '',
-    img: 'images/svg-1.svg',
+    img: 'images/homepage-1cropped.png',
+    // img: 'images/svg-7.svg',
     alt: ''
   };
   

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './Sidebar.css'
 import { styled, useTheme } from '@mui/material/styles';
 import FolderIcon from '@material-ui/icons/Folder';
 import { useFetch } from '../useFetch';
@@ -15,6 +14,7 @@ import Switch from '@mui/material/Switch';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Drawer from '@mui/material/Drawer';
 import { Input } from 'semantic-ui-react';
+import './Sidebar.css'
 
 
 const folder_url ='https://mocki.io/v1/74c041f6-8104-4239-9ff2-208e32ec6f61';
@@ -41,7 +41,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   );
 
 export const Sidebar = (props) => {
-    const [sidebarState, setSidebarState] = props.sidebarState;
+    const [repo_sidebarState, setSidebarState] = props.repo_sidebarState;
     const fdlr = useFetch(folder_url);
 
     const [folders, setFolders] = useState([]);
@@ -106,9 +106,9 @@ export const Sidebar = (props) => {
           <Drawer 
             variant="persistent"
             anchor="left"
-            open={sidebarState}
+            open={repo_sidebarState}
           >
-        <div className='sidebar-container'>
+        <div className='repo_sidebar-container'>
             <React.Fragment>
                 <div className='input-section'>
                     <input className='inputStyle noSelect' 
@@ -118,17 +118,17 @@ export const Sidebar = (props) => {
                     />
                     <CreateNewFolderIcon className="add-file-button" style={{'fontSize': '34px', 'transition': 'transform 0.2s'}} onClick={() => setModalShow(true)}/>
                 </div>
-                <div className='sidebar-list'>
-                <div className='sidebar-bigItem noSelect' onClick={() => {setShowFolders(!showFolders)}}>
+                <div className='repo_sidebar-list'>
+                <div className='repo_sidebar-bigItem noSelect' onClick={() => {setShowFolders(!showFolders)}}>
                     <FolderIcon className=" icon" style={{ 'fontSize' : '27px', marginRight: 10}}/>
                     Folders
                 </div>
                 <Collapse isOpened={showFolders}>
-                    <ul className='sidebar-list'>
+                    <ul className='repo_sidebar-list'>
                         {
                             folders.map((folder) => {
                                 return (
-                                <li className='sidebar-item noSelect' onClick={handleChange, () => setNotesFromFolder(`${folder.id}`)}>
+                                <li className='repo_sidebar-item noSelect' onClick={handleChange, () => setNotesFromFolder(`${folder.id}`)}>
                                     <FolderIcon className="icon" style={{'color' : folder.color, marginRight: 10}}/>
                                     {folder.name}
                                 </li>
@@ -137,11 +137,11 @@ export const Sidebar = (props) => {
                         }
                     </ul>
                 </Collapse>
-                <div className='sidebar-bigItem noSelect' onClick={handleChange, () => setNotesFromFolder('favorites')}>
+                <div className='repo_sidebar-bigItem noSelect' onClick={handleChange, () => setNotesFromFolder('favorites')}>
                     <FavoriteIcon className="icon" style={{'color' : '#e97979', 'fontSize' : '28px', marginRight: 10}}/>
                     Favorites
                 </div>
-                <div className='sidebar-bigItem noSelect' onClick={handleChange, () => setNotesFromFolder('deleted')}>
+                <div className='repo_sidebar-bigItem noSelect' onClick={handleChange, () => setNotesFromFolder('deleted')}>
                     <DeleteIcon className="icon" style={{'color' : '#727272', 'fontSize' : '28px', marginRight: 10}}/>
                     Trashcan
                 </div>
@@ -150,9 +150,9 @@ export const Sidebar = (props) => {
         </div>
           </Drawer>
     </React.Fragment>
-    <Main open={!sidebarState}>
+    <Main open={!repo_sidebarState}>
         <GallerySection 
-        isSidebar={sidebarState} 
+        isSidebar={repo_sidebarState} 
         switchState={[checked, setChecked]}
         folderState={[notesFromFolder, setNotesFromFolder]}
         allFolders={folders}

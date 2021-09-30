@@ -80,6 +80,7 @@
   
   .home_btn-link {
     display: flex;
+    margin-top: 15px;
     justify-content: center;
     align-items: center;
     text-decoration: none;

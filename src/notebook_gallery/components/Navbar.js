@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
+import { Sidebar } from './Sidebar'
 import './Navbar.css'
 import { List } from 'react-bootstrap-icons';
-import { Sidebar } from './Sidebar'
 import { GallerySection } from './GallerySection';
 
 
@@ -37,7 +37,7 @@ const Navbar = () => {
                    </ul> 
             </nav>
             <Sidebar 
-                sidebarState={[isSidebar, setIsSidebar]} />
+                repo_sidebarState={[isSidebar, setIsSidebar]} />
         </ React.Fragment>
     )}
 
