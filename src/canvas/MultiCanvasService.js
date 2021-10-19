@@ -89,7 +89,8 @@ const MultiPageCanvas = (brushThickness, brushColor, bEraseCanvas, bDisableCanva
 			scale		={zoomScale}
             bSelect     ={bSelect}
 			hideGrid	={true}
-			imgSrc		={"https://i.ibb.co/KhcjQ64/lines.jpg"}
+            imgSrc		={"https://i.ibb.co/KhcjQ64/lines.jpg"}
+			//imgSrc		={"https://i.ibb.co/72zYhbb/edited.jpg"}
 			/>);
         canvasList.push(ref.current);
 	}

@@ -16,7 +16,7 @@
 }
 
 .pricing__container-card:nth-child(2) {
-  transform: scale(1.05);
+  transform: scale(1.0);
   background: #13c79a;
 }
 
@@ -107,7 +107,6 @@
   }
 
   .pricing__container-card:nth-child(2) {
-    transform: scale(1);
     background: #242424;
     margin: 24px;
   }

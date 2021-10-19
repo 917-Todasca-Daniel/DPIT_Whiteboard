@@ -383,7 +383,7 @@ var _default = (_temp = _class = function (_PureComponent) {
       const base64_encoded_image = canvas.toDataURL().split(",")[1];
 
       var myHeaders = new Headers();
-      myHeaders.append("Authorization", "ya29.c.Kp8BEQgtcQLd2D9KUoM46F-pwumHl2aSIGy35qUYrankPjzjdCUpmskz5FTLyeWh6PULwyA7neQE8MhoyNoUeMwAlOb0HCHDi6woqQaSU55hsdXBPZNkdaCaF_V0PF9FR4dwmspRwcXxOy8Jr9nH6nioY1zJjr6eXb9t-XaBRRuR-RTaGDYYXyFW4lufelqrqdlXCl_QgWm7z8UqYkqZbWZS.....................................................................................................................................................................................................................................................................................");
+      myHeaders.append("Authorization", "Bearer ya29.c.Kp8BFQgSwggFsf2tIJPNumheigiTz6CDMouu-Hn0tiA5JrJzti7ZnL9Tfi_UOtA8K7V5oDHb7pffFZR9yJ5QnWs8ohXqOKuniNrMz96jRsfVvb3VT89_T0FM8PM0hgqjz2NjqA2Wo15sScBTxSbBLfmvgDYZyfQ__PFoxameLlTKSSuuWjAQXXdy97igL-35MmsR4MMpZm-Z_0ngeo8hngGM...............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................");
       myHeaders.append("Content-Type", "application/json");
       
       var raw = JSON.stringify({
@@ -459,7 +459,25 @@ var _default = (_temp = _class = function (_PureComponent) {
           [result["x"], result["y"], 0.5]
         );
         console.log(JSON.stringify(new_format_points));
-        const stroked_points = _stroke.getStroke(new_format_points);
+        const stroked_points = _stroke.getStroke(new_format_points, {
+          size: 8,
+          thinning: 0.5,
+          smoothing: 0.5,
+          streamline: 0.5,
+          easing: (t) => t,
+          simulatePressure: true,
+          last: true,
+          start: {
+            cap: true,
+            taper: 0,
+            easing: (t) => t,
+          },
+          end: {
+            cap: true,
+            taper: 0,
+            easing: (t) => t,
+          },
+        });
 
         console.log(JSON.stringify(stroked_points));
         // console.log(JSON.stringify(new_format_stroked_points);
