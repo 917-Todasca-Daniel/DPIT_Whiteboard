@@ -1,6 +1,6 @@
 .home_navbar {
     background: #FFF;
-    box-shadow: 0px 8px 24px 0px #B1B1B140;
+    box-shadow: 0px 8px 12px 0px #e7e7e740;
     height: 80px;
     display: flex;
     justify-content: center;
@@ -15,7 +15,7 @@
     display: flex;
     justify-content: space-between;
     height: 80px;
-    box-shadow: #000000;
+    /* box-shadow: #000000; */
   }
   
   .container {
@@ -26,7 +26,7 @@
     margin-left: auto;
     padding-right: 50px;
     padding-left: 50px;
-    box-shadow: #858383;
+    /* box-shadow: #858383; */
   }
   
   .home_navbar-logo {
